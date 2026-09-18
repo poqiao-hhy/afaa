@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>多媒体应用设计师 · 历年真题</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="多媒体软考">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2563EB">
+
+  <style>
+    :root {
+      --primary: #2563EB;
+      --primary-hover: #1D4ED8;
+      --primary-light: #EFF6FF;
+      --success: #12B76A;
+      --success-bg: #D1FADF;
+      --success-text: #027A48;
+      --error: #F04438;
+      --error-bg: #FEE4E2;
+      --error-text: #B42318;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text: #0F172A;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: text;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-top: var(--safe-top);
+      padding-bottom: calc(var(--safe-bottom) + 72px);
+      min-height: 100vh;
+    }
+
+    /* 顶部导航与模式切换 */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .app-title-bar {
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .app-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* iOS 提示条 */
+    .ios-pwa-banner {
+      background: linear-gradient(135deg, #2563EB, #3B82F6);
+      color: white;
+      padding: 8px 14px;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      line-height: 1.4;
+    }
+
+    .ios-pwa-banner button {
+      background: rgba(255, 255, 255, 0.25);
+      border: none;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .mode-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: white;
+    }
+
+    .mode-tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px 4px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .mode-tab.active {
+      color: var(--primary);
+    }
+
+    .mode-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 15%;
+      width: 70%;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 3px 3px 0 0;
+    }
+
+    /* 年份切换 Chip 栏 */
+    .chips-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 16px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      scrollbar-width: none;
+    }
+
+    .chips-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip {
+      white-space: nowrap;
+      padding: 6px 14px;
+      font-size: 13px;
+      border-radius: 18px;
+      background: #F1F5F9;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+
+    .chip.active {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* 状态与进度信息条 */
+    .info-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      background: #F8FAFC;
+    }
+
+    .badge-btn {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      background: #E2E8F0;
+      color: var(--text);
+      border: none;
+      cursor: pointer;
+    }
+
+    .badge-btn.primary {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* 主内容区 */
+    main {
+      padding: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .tag-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #F1F5F9;
+      color: #475569;
+    }
+
+    .tag.highlight {
+      background: #FEF3C7;
+      color: #B45309;
+    }
+
+    .question-stem {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    /* 选择题选项样式 */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: white;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .option-item:active {
+      transform: scale(0.99);
+    }
+
+    .option-key {
+      width: 28px;
+      height: 28px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      background: #F1F5F9;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .option-text {
+      font-size: 15px;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    /* 选项状态 */
+    .option-item.correct {
+      background: var(--success-bg) !important;
+      border-color: var(--success) !important;
+    }
+    .option-item.correct .option-key {
+      background: var(--success) !important;
+      color: white !important;
+    }
+
+    .option-item.wrong {
+      background: var(--error-bg) !important;
+      border-color: var(--error) !important;
+    }
+    .option-item.wrong .option-key {
+      background: var(--error) !important;
+      color: white !important;
+    }
+
+    /* 答案与解析面板 */
+    .analysis-panel {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+    }
+
+    .ans-title {
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .ans-val {
+      font-size: 16px;
+      color: var(--success-text);
+      font-weight: 800;
+    }
+
+    .ans-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-top: 8px;
+      white-space: pre-wrap;
+    }
+
+    /* 下午题输入框样式 */
+    .blank-group {
+      margin-bottom: 14px;
+    }
+
+    .blank-label {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .blank-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .blank-input:focus {
+      border-color: var(--primary);
+    }
+
+    .blank-feedback {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 6px;
+      margin-top: 4px;
+    }
+
+    .blank-feedback.correct {
+      background: var(--success-bg);
+      color: var(--success-text);
+    }
+
+    .blank-feedback.wrong {
+      background: var(--error-bg);
+      color: var(--error-text);
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: var(--primary);
+      color: white;
+      margin-top: 8px;
+      transition: opacity 0.2s;
+    }
+
+    .action-btn:active {
+      opacity: 0.85;
+    }
+
+    /* 简答题自测区域 */
+    .draft-area {
+      width: 100%;
+      min-height: 90px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      font-family: inherit;
+      resize: vertical;
+      margin-bottom: 10px;
+      outline: none;
+    }
+
+    .keywords-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .kw-chip {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      background: white;
+      border: 1px solid #D0D5DD;
+      color: #344054;
+    }
+
+    .kw-chip.hit {
+      background: var(--success-bg);
+      border-color: var(--success);
+      color: var(--success-text);
+    }
+
+    /* 底部悬浮翻页栏 */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border);
+      padding: 10px 16px calc(10px + var(--safe-bottom));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 90;
+    }
+
+    .nav-btn {
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      background: #F1F5F9;
+      color: var(--text);
+      border: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .nav-btn.primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* 模态弹窗 */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      max-width: 420px;
+      width: 100%;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .score-card {
+      background: var(--success-bg);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+
+    .score-card.fail {
+      background: var(--error-bg);
+    }
+
+    .score-num {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--success-text);
+      line-height: 1;
+    }
+
+    .score-card.fail .score-num {
+      color: var(--error-text);
+    }
+
+    .pass-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--success);
+      margin-top: 8px;
+    }
+
+    .score-card.fail .pass-badge {
+      background: var(--error);
+    }
+
+    .stat-grid {
+      display: flex;
+      justify-content: space-around;
+      margin: 16px 0;
+    }
+
+    .stat-item-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .stat-item-val {
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .modal-btns {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+    }
+
+    .modal-btn.primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .modal-btn.secondary {
+      background: #F1F5F9;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 顶部标题与 PWA 安装提示 -->
+  <header>
+    <div id="iosInstallBanner" class="ios-pwa-banner" style="display: none;">
+      <span>📲 提示：在 Safari 点击底部【分享】➔【添加到主屏幕】，即为原生 App！</span>
+      <button onclick="dismissBanner()">知道了</button>
+    </div>
+
+    <div class="app-title-bar">
+      <div class="app-title">多媒体应用设计师 · 历年真题</div>
+    </div>
+
+    <!-- 模式切换 -->
+    <div class="mode-tabs">
+      <div class="mode-tab active" id="tabMorning" onclick="switchMode('morning')">☀️ 上午选择题</div>
+      <div class="mode-tab" id="tabAfternoon" onclick="switchMode('afternoon')">✍️ 下午案例填空</div>
+      <div class="mode-tab" id="tabEssay" onclick="switchMode('essay')">📖 下午简答必背</div>
+    </div>
+
+    <!-- 年份切换 -->
+    <div class="chips-bar" id="yearChipsBar"></div>
+
+    <!-- 进度与结算入口 -->
+    <div class="info-bar">
+      <span id="progressInfo">正在加载试题数据...</span>
+      <button class="badge-btn primary" id="btnScoreCard" onclick="openScoreModal()">成绩结算</button>
+    </div>
+  </header>
+
+  <!-- 试题主内容容器 -->
+  <main id="mainContainer">
+    <div class="card" style="text-align: center; padding: 40px;">
+      <p>正在初始化 2020~2025 年真题库...</p>
+    </div>
+  </main>
+
+  <!-- 底部翻页栏 -->
+  <div class="bottom-bar">
+    <button class="nav-btn" id="btnPrev" onclick="navigateQ(-1)">上一题</button>
+    <span id="pageCounter" style="font-size: 13px; font-weight: 600; color: var(--text-muted);">0 / 0</span>
+    <button class="nav-btn primary" id="btnNext" onclick="navigateQ(1)">下一题</button>
+  </div>
+
+  <!-- 成绩结算弹窗 -->
+  <div class="modal-overlay" id="scoreModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-title">📊 考试成绩结算</div>
+      <div style="font-size: 13px; color: var(--text-muted); margin-top: 2px;" id="modalSubtitle">2025年全国统考卷</div>
+
+      <div class="score-card" id="modalScoreCard">
+        <div style="font-size: 12px; margin-bottom: 4px;" id="modalScoreLabel">最终得分数</div>
+        <div class="score-num" id="modalScoreNum">0</div>
+        <div style="font-size: 14px; font-weight: 600; margin-top: 4px;" id="modalTotalLabel">/ 总分 75 分</div>
+        <div class="pass-badge" id="modalPassBadge">恭喜及格（及格线 45 分）🎉</div>
+      </div>
+
+      <div class="stat-grid" id="modalStatGrid">
+        <div>
+          <div class="stat-item-label">答对</div>
+          <div class="stat-item-val" style="color: var(--success);" id="statCorrect">0 题</div>
+        </div>
+        <div>
+          <div class="stat-item-label">做错</div>
+          <div class="stat-item-val" style="color: var(--error);" id="statWrong">0 题</div>
+        </div>
+        <div>
+          <div class="stat-item-label">未答</div>
+          <div class="stat-item-val" id="statUnanswered">0 题</div>
+        </div>
+        <div>
+          <div class="stat-item-label">正确率</div>
+          <div class="stat-item-val" style="color: var(--primary);" id="statAccuracy">0%</div>
+        </div>
+      </div>
+
+      <div id="modalAfternoonList" style="display: none; text-align: left; margin: 12px 0; font-size: 13px;"></div>
+
+      <div class="modal-btns">
+        <button class="modal-btn secondary" onclick="restartCurrentPaper()">重做本科目</button>
+        <button class="modal-btn primary" onclick="closeScoreModal()">查看试题解析</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 全局数据状态
+    let morningData = [];
+    let afternoonData = [];
+    let essayData = [];
+
+    let currentMode = 'morning'; // 'morning' | 'afternoon' | 'essay'
+    let selectedYear = 2025;
+    let currentIndex = 0;
+
+    // 用户答题记录
+    let morningAnswers = {};     // questionId -> "A"
+    let afternoonInputs = {};    // "${qId}_${blankId}" -> text
+    let afternoonSubmitted = {}; // qId -> true
+    let essayDrafts = {};        // qId -> text
+    let essayRevealed = {};      // qId -> true
+
+    // 初始化载入
+    window.addEventListener('DOMContentLoaded', async () => {
+      // 检查 iOS Safari 提示
+      const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent.toLowerCase());
+      const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+      if (isIos && !isStandalone) {
+        document.getElementById('iosInstallBanner').style.display = 'flex';
+      }
+
+      // 注册 Service Worker
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration fail:', err));
+      }
+
+      await loadAllData();
+      renderYearChips();
+      renderCurrentQuestion();
+    });
+
+    function dismissBanner() {
+      document.getElementById('iosInstallBanner').style.display = 'none';
+    }
+
+    // 读取所有题库
+    async function loadAllData() {
+      try {
+        const [mRes, afRes, esRes] = await Promise.all([
+          fetch('./data/questions.json'),
+          fetch('./data/afternoon_questions.json'),
+          fetch('./data/essay_questions.json')
+        ]);
+        morningData = await mRes.json();
+        afternoonData = await afRes.json();
+        essayData = await esRes.json();
+      } catch (err) {
+        console.error('载入题库失败:', err);
+      }
+    }
+
+    // 模式切换
+    function switchMode(mode) {
+      currentMode = mode;
+      document.getElementById('tabMorning').classList.toggle('active', mode === 'morning');
+      document.getElementById('tabAfternoon').classList.toggle('active', mode === 'afternoon');
+      document.getElementById('tabEssay').classList.toggle('active', mode === 'essay');
+
+      // 切换模式保持当前年份，索引重置
+      currentIndex = 0;
+      renderYearChips();
+      renderCurrentQuestion();
+      window.scrollTo(0, 0);
+    }
+
+    // 获取当前模式下的题目列表
+    function getCurrentQuestions() {
+      let list = [];
+      if (currentMode === 'morning') list = morningData;
+      else if (currentMode === 'afternoon') list = afternoonData;
+      else list = essayData;
+
+      if (selectedYear === null) return list;
+      return list.filter(q => q.year === selectedYear);
+    }
+
+    // 渲染年份切换 Chip
+    function renderYearChips() {
+      let rawList = currentMode === 'morning' ? morningData : (currentMode === 'afternoon' ? afternoonData : essayData);
+      const years = Array.from(new Set(rawList.map(q => q.year))).sort((a, b) => b - a);
+      const allYears = [null, ...years];
+
+      const bar = document.getElementById('yearChipsBar');
+      bar.innerHTML = '';
+
+      allYears.forEach(y => {
+        const count = y === null ? rawList.length : rawList.filter(q => q.year === y).length;
+        const label = y === null ? `全部 (${count})` : `${y}年 (${count}题)`;
+        const chip = document.createElement('div');
+        chip.className = `chip ${selectedYear === y ? 'active' : ''}`;
+        chip.innerText = label;
+        chip.onclick = () => {
+          // 核心规则：切换年份清空记录、重置第1题
+          selectedYear = y;
+          currentIndex = 0;
+          if (currentMode === 'morning') morningAnswers = {};
+          else if (currentMode === 'afternoon') { afternoonInputs = {}; afternoonSubmitted = {}; }
+          else { essayDrafts = {}; essayRevealed = {}; }
+          
+          closeScoreModal();
+          renderYearChips();
+          renderCurrentQuestion();
+          window.scrollTo(0, 0);
+        };
+        bar.appendChild(chip);
+      });
+    }
+
+    // 渲染当前题目
+    function renderCurrentQuestion() {
+      const list = getCurrentQuestions();
+      const container = document.getElementById('mainContainer');
+
+      if (list.length === 0) {
+        container.innerHTML = '<div class="card" style="text-align: center; padding: 40px;"><p>当前年份暂无收录试题</p></div>';
+        document.getElementById('pageCounter').innerText = '0 / 0';
+        return;
+      }
+
+      const q = list[currentIndex];
+      const yearText = selectedYear ? `${selectedYear}年` : '全部';
+
+      // 更新翻页指示
+      document.getElementById('pageCounter').innerText = `${currentIndex + 1} / ${list.length}`;
+      document.getElementById('btnPrev').disabled = currentIndex === 0;
+
+      // 最后一题按钮文案
+      const nextBtn = document.getElementById('btnNext');
+      if (currentIndex === list.length - 1) {
+        nextBtn.innerText = '查看得分';
+        nextBtn.onclick = () => openScoreModal();
+      } else {
+        nextBtn.innerText = '下一题';
+        nextBtn.onclick = () => navigateQ(1);
+      }
+
+      // 更新顶部状态条
+      if (currentMode === 'morning') {
+        const correctCount = list.filter(item => morningAnswers[item.id] === item.answer).length;
+        document.getElementById('progressInfo').innerText = `${yearText}真题 · 第 ${currentIndex + 1}/${list.length} 题`;
+        document.getElementById('btnScoreCard').innerText = `成绩结算 (${correctCount}分)`;
+        renderMorningQ(q);
+      } else if (currentMode === 'afternoon') {
+        const score = calculateAfternoonTotal(list);
+        document.getElementById('progressInfo').innerText = `${yearText}下午卷 · 试题 ${currentIndex + 1}/${list.length}`;
+        document.getElementById('btnScoreCard').innerText = `下午成绩单 (${score}分)`;
+        renderAfternoonQ(q);
+      } else {
+        const revealedCount = list.filter(item => essayRevealed[item.id]).length;
+        document.getElementById('progressInfo').innerText = `${yearText}简答 · 第 ${currentIndex + 1}/${list.length} 题`;
+        document.getElementById('btnScoreCard').innerText = `自测进度 (${revealedCount}/${list.length})`;
+        renderEssayQ(q);
+      }
+    }
+
+    // 渲染上午客观选择题
+    function renderMorningQ(q) {
+      const container = document.getElementById('mainContainer');
+      const selected = morningAnswers[q.id];
+      const isAnswered = selected !== undefined;
+
+      let optionsHtml = q.options.map(opt => {
+        let cls = '';
+        if (isAnswered) {
+          if (opt.key === q.answer) cls = 'correct';
+          else if (opt.key === selected) cls = 'wrong';
+        }
+        return `
+          <div class="option-item ${cls}" onclick="selectMorningOption('${q.id}', '${opt.key}', '${q.answer}')">
+            <div class="option-key">${opt.key}</div>
+            <div class="option-text">${opt.value}</div>
+          </div>
+        `;
+      }).join('');
+
+      let analysisHtml = '';
+      if (isAnswered) {
+        const isRight = selected === q.answer;
+        analysisHtml = `
+          <div class="analysis-panel">
+            <div class="ans-title">
+              <span>【正确答案】</span>
+              <span class="ans-val">${q.answer}</span>
+              <span style="color: ${isRight ? 'var(--success)' : 'var(--error)'}; margin-left: 10px;">
+                ${isRight ? '回答正确 🎉' : '回答错误 ❌'}
+              </span>
+            </div>
+            <div style="font-weight: 700; font-size: 13px; margin-top: 8px;">【试题解析】</div>
+            <div class="ans-desc">${q.analysis}</div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="card">
+          <div class="tag-row">
+            <span class="tag">${q.year}年真题</span>
+            <span class="tag highlight">${q.category}</span>
+          </div>
+          <div class="question-stem">${currentIndex + 1}. ${q.stem}</div>
+          <div class="options-list">${optionsHtml}</div>
+          ${analysisHtml}
+        </div>
+      `;
+    }
+
+    function selectMorningOption(qId, key, answer) {
+      if (morningAnswers[qId]) return;
+      morningAnswers[qId] = key;
+      renderCurrentQuestion();
+
+      // 核心规则：在做完最后一道题时（或全部做完），自动弹出成绩弹窗
+      const list = getCurrentQuestions();
+      const allDone = list.every(item => morningAnswers[item.id] !== undefined);
+      if (currentIndex === list.length - 1 || allDone) {
+        setTimeout(() => openScoreModal(), 300);
+      }
+    }
+
+    // 渲染下午案例填空题
+    function renderAfternoonQ(q) {
+      const container = document.getElementById('mainContainer');
+      const isSubmitted = afternoonSubmitted[q.id] === true;
+
+      // 计算本大题得分
+      let qScore = 0;
+      q.blanks.forEach(b => {
+        const uVal = (afternoonInputs[`${q.id}_${b.id}`] || '').trim().toLowerCase();
+        const sVal = b.standardAnswer.trim().toLowerCase();
+        const matched = uVal && (uVal === sVal || (b.acceptableAnswers && b.acceptableAnswers.some(a => a.trim().toLowerCase() === uVal)));
+        if (matched) qScore += b.score;
+      });
+
+      let blanksHtml = q.blanks.map(b => {
+        const key = `${q.id}_${b.id}`;
+        const uVal = afternoonInputs[key] || '';
+        const uValClean = uVal.trim().toLowerCase();
+        const sValClean = b.standardAnswer.trim().toLowerCase();
+        const isCorrect = uValClean && (uValClean === sValClean || (b.acceptableAnswers && b.acceptableAnswers.some(a => a.trim().toLowerCase() === uValClean)));
+
+        let feedback = '';
+        if (isSubmitted) {
+          if (isCorrect) {
+            feedback = `<div class="blank-feedback correct">✅ 回答正确 (+${b.score}分)</div>`;
+          } else {
+            feedback = `<div class="blank-feedback wrong">❌ 参考答案: ${b.standardAnswer} ${uVal ? `| 你填写的: ${uVal}` : '| 未填写'}</div>`;
+          }
+        }
+
+        return `
+          <div class="blank-group">
+            <div class="blank-label">${b.label} (${b.score} 分)</div>
+            <input type="text" class="blank-input" value="${uVal}" placeholder="在此输入${b.label}的答案..." 
+              ${isSubmitted ? 'readonly' : ''} oninput="afternoonInputs['${key}'] = this.value">
+            ${feedback}
+          </div>
+        `;
+      }).join('');
+
+      let solutionHtml = '';
+      if (isSubmitted) {
+        solutionHtml = `
+          <div class="analysis-panel" style="background: #F0FDF4; border-color: #BBF7D0;">
+            <div style="font-weight: 700; color: var(--success-text);">【官方参考答案及评分细则】</div>
+            <div class="ans-desc" style="color: #1E293B;">${q.solution}</div>
+            <div style="font-weight: 700; color: var(--primary); margin-top: 12px;">【考点精讲与解题思路】</div>
+            <div class="ans-desc">${q.analysis}</div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="card">
+          <div class="tag-row">
+            <span class="tag">${q.year}年下午题</span>
+            <span class="tag highlight">${q.category}</span>
+            <span class="tag" style="margin-left: auto; background: var(--primary-light); color: var(--primary);">满分 ${q.totalScore} 分</span>
+          </div>
+          <h2 style="font-size: 17px; font-weight: 800; margin-bottom: 12px;">${q.title}</h2>
+          
+          <div style="background: #F8FAFC; border-radius: 10px; padding: 12px; font-size: 14px; color: #475569; margin-bottom: 12px; line-height: 1.6; white-space: pre-wrap;">${q.background}</div>
+          <div style="font-size: 15px; font-weight: 500; margin-bottom: 16px; line-height: 1.6; white-space: pre-wrap;">${q.questionText}</div>
+          
+          <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <span style="font-weight: 700; color: var(--primary);">✍️ 考生作答区（输入各空答案）</span>
+              ${isSubmitted ? `<span style="font-weight: 700; color: ${qScore >= 9 ? 'var(--success)' : 'var(--error)'};">得分: ${qScore} / ${q.totalScore} 分</span>` : ''}
+            </div>
+            ${blanksHtml}
+            ${!isSubmitted ? 
+              `<button class="action-btn" onclick="submitAfternoonQ('${q.id}')">核对答案 / 提交评分</button>` : 
+              `<button class="action-btn" style="background: #64748B;" onclick="resubmitAfternoonQ('${q.id}')">修改本题重答</button>`
+            }
+          </div>
+          ${solutionHtml}
+        </div>
+      `;
+    }
+
+    function submitAfternoonQ(qId) {
+      afternoonSubmitted[qId] = true;
+      renderCurrentQuestion();
+
+      const list = getCurrentQuestions();
+      if (currentIndex === list.length - 1) {
+        setTimeout(() => openScoreModal(), 300);
+      }
+    }
+
+    function resubmitAfternoonQ(qId) {
+      afternoonSubmitted[qId] = false;
+      renderCurrentQuestion();
+    }
+
+    function calculateAfternoonTotal(list) {
+      let total = 0;
+      list.forEach(q => {
+        q.blanks.forEach(b => {
+          const uVal = (afternoonInputs[`${q.id}_${b.id}`] || '').trim().toLowerCase();
+          const sVal = b.standardAnswer.trim().toLowerCase();
+          const matched = uVal && (uVal === sVal || (b.acceptableAnswers && b.acceptableAnswers.some(a => a.trim().toLowerCase() === uVal)));
+          if (matched) total += b.score;
+        });
+      });
+      return total;
+    }
+
+    // 渲染下午简答必背
+    function renderEssayQ(q) {
+      const container = document.getElementById('mainContainer');
+      const isRevealed = essayRevealed[q.id] === true;
+      const draft = essayDrafts[q.id] || '';
+
+      const hitKeywords = q.keywords.filter(kw => draft.toLowerCase().includes(kw.toLowerCase()));
+
+      let kwChipsHtml = q.keywords.map(kw => {
+        const isHit = draft.toLowerCase().includes(kw.toLowerCase());
+        return `<span class="kw-chip ${isHit ? 'hit' : ''}">${isHit ? '✅' : '⭕'} ${kw}</span>`;
+      }).join('');
+
+      let answerPanel = '';
+      if (isRevealed) {
+        answerPanel = `
+          <div style="margin-top: 14px; background: #EFF8FF; border: 1px solid #B2DDFF; border-radius: 12px; padding: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span style="font-weight: 700; color: #175CD3; font-size: 13px;">🎯 阅卷核心采分关键词（踩点给分）</span>
+              <span style="font-size: 12px; font-weight: 700; color: ${hitKeywords.length >= q.keywords.length / 2 ? 'var(--success-text)' : 'var(--error-text)'}">
+                已命中 ${hitKeywords.length} / ${q.keywords.length} 词
+              </span>
+            </div>
+            <div class="keywords-chips">${kwChipsHtml}</div>
+          </div>
+
+          <div class="analysis-panel" style="background: #F6FEF9; border-color: #A6F4C5;">
+            <div style="font-weight: 700; color: var(--success-text); margin-bottom: 6px;">📝 官方标准满分答题范文模板</div>
+            <div class="ans-desc" style="color: #1E293B;">${q.template}</div>
+            <div style="font-weight: 700; color: var(--primary); margin-top: 12px;">💡 深度考点解析与解题思路</div>
+            <div class="ans-desc">${q.analysis}</div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="card">
+          <div class="tag-row">
+            <span class="tag">${q.year}年简答</span>
+            <span class="tag highlight">${q.category}</span>
+            <span class="tag" style="margin-left: auto; background: var(--primary-light); color: var(--primary);">本题 ${q.score} 分</span>
+          </div>
+          <h2 style="font-size: 17px; font-weight: 800; margin-bottom: 12px;">${currentIndex + 1}. ${q.title}</h2>
+          <div style="font-size: 15px; line-height: 1.6; margin-bottom: 14px; white-space: pre-wrap;">${q.questionText}</div>
+
+          <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+            <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">
+              <span>✍️ 你的答题思路草稿（自测模式）</span>
+              <span style="color: var(--text-muted); font-weight: normal;">建议先列要点，再对答案</span>
+            </div>
+            <textarea class="draft-area" placeholder="在此简要输入你的 1、2、3 要点关键词..." oninput="essayDrafts['${q.id}'] = this.value">${draft}</textarea>
+            <button class="action-btn" onclick="toggleEssayReveal('${q.id}')">
+              ${isRevealed ? '隐藏采分点与参考答案' : '🎯 核对采分点与满分模板'}
+            </button>
+          </div>
+
+          ${answerPanel}
+        </div>
+      `;
+    }
+
+    function toggleEssayReveal(qId) {
+      essayRevealed[qId] = !essayRevealed[qId];
+      renderCurrentQuestion();
+    }
+
+    // 翻页逻辑
+    function navigateQ(step) {
+      const list = getCurrentQuestions();
+      const newIndex = currentIndex + step;
+      if (newIndex >= 0 && newIndex < list.length) {
+        currentIndex = newIndex;
+        renderCurrentQuestion();
+        window.scrollTo(0, 0);
+      }
+    }
+
+    // 成绩弹窗
+    function openScoreModal() {
+      const list = getCurrentQuestions();
+      const modal = document.getElementById('scoreModal');
+      const yearText = selectedYear ? `${selectedYear}年` : '历年';
+
+      if (currentMode === 'morning') {
+        const totalScore = list.length * 1;
+        const correctCount = list.filter(q => morningAnswers[q.id] === q.answer).length;
+        const wrongCount = list.filter(q => morningAnswers[q.id] && morningAnswers[q.id] !== q.answer).length;
+        const answeredCount = list.filter(q => morningAnswers[q.id]).length;
+        const isPassed = correctCount >= 45;
+
+        document.getElementById('modalSubtitle').innerText = `${yearText}全国统考《综合知识》单选卷`;
+        document.getElementById('modalScoreLabel').innerText = '最终得分数';
+        document.getElementById('modalScoreNum').innerText = correctCount;
+        document.getElementById('modalTotalLabel').innerText = `/ 总分 ${totalScore} 分`;
+
+        const card = document.getElementById('modalScoreCard');
+        card.className = `score-card ${isPassed ? '' : 'fail'}`;
+        document.getElementById('modalPassBadge').innerText = isPassed ? '恭喜及格（及格线 45 分）🎉' : '未达及格线（及格线 45 分）💪';
+
+        document.getElementById('statCorrect').innerText = `${correctCount} 题`;
+        document.getElementById('statWrong').innerText = `${wrongCount} 题`;
+        document.getElementById('statUnanswered').innerText = `${totalScore - answeredCount} 题`;
+        document.getElementById('statAccuracy').innerText = answeredCount > 0 ? `${Math.round(correctCount * 100 / answeredCount)}%` : '0%';
+
+        document.getElementById('modalStatGrid').style.display = 'flex';
+        document.getElementById('modalAfternoonList').style.display = 'none';
+
+      } else if (currentMode === 'afternoon') {
+        const totalPossible = list.reduce((acc, q) => acc + q.totalScore, 0);
+        const finalScore = calculateAfternoonTotal(list);
+        const isPassed = finalScore >= 45;
+
+        document.getElementById('modalSubtitle').innerText = `${yearText}下午《应用技术》案例大题卷`;
+        document.getElementById('modalScoreLabel').innerText = '最终得分数';
+        document.getElementById('modalScoreNum').innerText = finalScore;
+        document.getElementById('modalTotalLabel').innerText = `/ 总分 ${totalPossible} 分`;
+
+        const card = document.getElementById('modalScoreCard');
+        card.className = `score-card ${isPassed ? '' : 'fail'}`;
+        document.getElementById('modalPassBadge').innerText = isPassed ? '恭喜及格（及格线 45 分）🎉' : '未达及格线（及格线 45 分）💪';
+
+        document.getElementById('modalStatGrid').style.display = 'none';
+        const afList = document.getElementById('modalAfternoonList');
+        afList.style.display = 'block';
+
+        let listHtml = list.map((q, idx) => {
+          let s = 0;
+          q.blanks.forEach(b => {
+            const uVal = (afternoonInputs[`${q.id}_${b.id}`] || '').trim().toLowerCase();
+            const sVal = b.standardAnswer.trim().toLowerCase();
+            if (uVal && (uVal === sVal || (b.acceptableAnswers && b.acceptableAnswers.some(a => a.trim().toLowerCase() === uVal)))) s += b.score;
+          });
+          const isSub = afternoonSubmitted[q.id];
+          return `
+            <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed #E2E8F0;">
+              <span>试题${idx + 1} (${q.category})</span>
+              <span style="font-weight: bold; color: ${isSub && s >= 9 ? 'var(--success)' : '#64748B'}">
+                ${isSub ? `${s} / ${q.totalScore} 分` : '未核对 (0/15)'}
+              </span>
+            </div>
+          `;
+        }).join('');
+        afList.innerHTML = listHtml;
+      } else {
+        const revealed = list.filter(q => essayRevealed[q.id]).length;
+        document.getElementById('modalSubtitle').innerText = `${yearText}下午简答与踩分点速记`;
+        document.getElementById('modalScoreLabel').innerText = '已自测题数';
+        document.getElementById('modalScoreNum').innerText = revealed;
+        document.getElementById('modalTotalLabel').innerText = `/ 总共 ${list.length} 题`;
+
+        const card = document.getElementById('modalScoreCard');
+        card.className = 'score-card';
+        document.getElementById('modalPassBadge').innerText = revealed >= list.length ? '本卷简答已全部背诵过一遍 🎉' : '继续加油背诵！💪';
+
+        document.getElementById('modalStatGrid').style.display = 'none';
+        document.getElementById('modalAfternoonList').style.display = 'none';
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    function closeScoreModal() {
+      document.getElementById('scoreModal').style.display = 'none';
+    }
+
+    function restartCurrentPaper() {
+      const list = getCurrentQuestions();
+      list.forEach(q => {
+        delete morningAnswers[q.id];
+        delete afternoonSubmitted[q.id];
+        delete essayRevealed[q.id];
+      });
+      currentIndex = 0;
+      closeScoreModal();
+      renderCurrentQuestion();
+      window.scrollTo(0, 0);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1770 @@
+[
+  {
+    "id": "2025-pm-01",
+    "year": 2025,
+    "questionNumber": 1,
+    "title": "试题一：新一代超高清视频压缩与H.266/VVC块划分技术",
+    "category": "视频编码与标准",
+    "background": "【说明】\n某新媒体机构建设 8K 超高清（7680×4320）低延迟云端转码发布平台。为在有限带宽下传输高质量画面，技术架构组评估引入新一代视频编码标准 H.266/VVC。相比 H.265/HEVC，VVC 引入了多叉树嵌套块划分结构，并升级了环路滤波与自适应亮度映射技术。",
+    "questionText": "【问题 1】（6 分）\n请阅读上述说明，结合视频编码技术，回答下列问题并将正确内容填入对应空缺处：\n(1) 在 H.265/HEVC 中，编码树单元（CTU）最大尺寸为 64×64，采用单一的四叉树划分；而在 H.266/VVC 中，CTU 最大尺寸扩展到了 128×128，且引入了四叉树嵌套 ______（QTMT）结构，使得编码单元能够支持矩形划分，大幅提升了对纹理边界的适应性。\n(2) 在 VVC 环路滤波流程中，除了去块滤波（DBF）和样点自适应补偿（SAO）之外，新增了具有跨分量自适应特性的自适应环路滤波，其英文简称是 ______。\n(3) 超高清 8K 视频标准推荐采用 ITU-R ______ 色域标准，相较于高清阶段的 BT.709，其能覆盖约 75.8% 的可见光谱色度空间。\n\n【问题 2】（9 分）\n(4) 某段 8K 视频帧率为 60 fps，采用 10 bit 采样、YUV 4:2:0 格式。请计算该视频未压缩时的原始裸流数据传输速率为 ______ Gbps（保留两位小数，按 1 Byte = 8 bit，1G = 1000M = 10^9 计算）。\n(5) 若经 VVC 编码后平均码率压缩至 48 Mbps，则该视频流的压缩比约为 ______ : 1（四舍五入取整）。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "多叉树",
+        "acceptableAnswers": [
+          "二叉树三叉树",
+          "多叉树结构",
+          "二叉树和三叉树",
+          "多类型树"
+        ],
+        "score": 3
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "ALF",
+        "acceptableAnswers": [
+          "ALF",
+          "Adaptive Loop Filter",
+          "alf"
+        ],
+        "score": 3
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "BT.2020",
+        "acceptableAnswers": [
+          "BT.2020",
+          "Rec.2020",
+          "BT2020"
+        ],
+        "score": 3
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "29.86",
+        "acceptableAnswers": [
+          "29.86",
+          "29.9",
+          "29.85984"
+        ],
+        "score": 3
+      },
+      {
+        "id": "(5)",
+        "label": "空(5)",
+        "standardAnswer": "622",
+        "acceptableAnswers": [
+          "622",
+          "622:1"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 多叉树（或二叉树/三叉树，QTMT即Quad-Tree with Nested Multi-Type Tree）\n(2) ALF（Adaptive Loop Filter，自适应环路滤波）\n(3) BT.2020（或 Rec.2020）\n(4) 29.86（计算：7680×4320×1.5×10×60 bit/s = 29,859,840,000 bps ≈ 29.86 Gbps）\n(5) 622（计算：29859.84 Mbps / 48 Mbps ≈ 622.08）",
+    "analysis": "【考点解析】\n1. VVC 的核心突破在于 QTMT 划分机制，CU 可以在四叉树（QT）叶子节点继续通过水平/垂直二叉树（BT）或水平/垂直三叉树（TT）进行非正方形切分。\n2. 环路滤波顺序为：去块滤波（DBF）-> 样点自适应补偿（SAO）-> 自适应环路滤波（ALF）。\n3. 8K 超高清色彩空间是 BT.2020。计算 YUV 4:2:0 时，每个像素平均分配 1 个 Y、0.25 个 U、0.25 个 V，共 1.5 个分量，10 bit 像素占用 15 bit。",
+    "totalScore": 15
+  },
+  {
+    "id": "2025-pm-02",
+    "year": 2025,
+    "questionNumber": 2,
+    "title": "试题二：空间音频与 Dolby Atmos 基于对象的声场渲染",
+    "category": "数字音频处理",
+    "background": "【说明】\n某全景声沉浸式虚拟展馆采用基于对象的空间音频（Object-based Spatial Audio）技术。音频工程师需实现声音在三维听音空间中精准定位，并支持根据观众佩戴的 VR 头显姿态进行低延迟动态双耳渲染（Binaural Rendering）。",
+    "questionText": "【问题 1】（6 分）\n(1) 传统声道式环绕声（如 5.1、7.1 声道）是固定的声道输出，而基于对象的音频由音频裸数据与描述声音空间坐标、扩散度等属性的 ______ 共同封装而成，渲染端根据实际扬声器布局或耳机实时解算每个对象的声音。\n(2) 在耳机端实现 3D 沉浸式听觉时，需要利用头部相关传输函数来模拟人耳对空间声源的滤波效应，其英文缩写是 ______。\n\n【问题 2】（9 分）\n(3) 展馆采集一段环境混响声音，采样频率设定为 96 kHz，量化精度为 24 bit，采用 4 声道立体声录制，持续时间为 10 分钟。该段未压缩音频文件的理论数据存储大小为 ______ MB（按 1 MB = 1024×1024 字节计算，保留整数）。\n(4) 声源在听音者头部的空间坐标可以通过三维空间中的偏航角（Yaw）、俯仰角（Pitch）和 ______ 角（Roll）三自由度（3-DoF）进行方向追踪与实时旋转映射。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "元数据",
+        "acceptableAnswers": [
+          "元数据",
+          "Metadata",
+          "空间元数据"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "HRTF",
+        "acceptableAnswers": [
+          "HRTF",
+          "hrtf",
+          "Head-Related Transfer Function"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "659",
+        "acceptableAnswers": [
+          "659",
+          "659.18",
+          "660"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "翻滚",
+        "acceptableAnswers": [
+          "翻滚",
+          "横滚",
+          "横滚角",
+          "Roll"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 元数据（Metadata）\n(2) HRTF（Head-Related Transfer Function）\n(3) 659（计算：96,000 × (24/8) × 4 × 600 字节 = 691,200,000 字节 ÷ (1024×1024) ≈ 659.18 MB）\n(4) 翻滚（或横滚，Roll）",
+    "analysis": "【考点解析】\n1. Dolby Atmos 等基于对象的音频格式核心由“Audio Bed（床音轨）+ Audio Objects（对象音轨）+ Metadata（空间元数据）”构成。\n2. 双耳 3D 渲染核心在于 HRTF（头部相关传输函数），包含双耳时间差（ITD）和双耳声级差（ILD）。\n3. 音频数据量计算公式：采样频率(Hz) × 量化位数(bit)/8 × 声道数 × 时间(s)。注意 10 分钟为 600 秒。",
+    "totalScore": 15
+  },
+  {
+    "id": "2025-pm-03",
+    "year": 2025,
+    "questionNumber": 3,
+    "title": "试题三：WebCodecs 与硬件加速浏览器多媒体管线设计",
+    "category": "多媒体交互与前端技术",
+    "background": "【说明】\n某实时在线视频云剪辑平台需要在浏览器端实现毫秒级帧提取与客户端滤镜合成。传统 HTML5 `<video>` 标签无法直接暴露底层解码后的 VideoFrame 显存对象。技术团队选用 W3C 现代规范 WebCodecs API 配合 OffscreenCanvas 和 WebGL 进行渲染管线重构。",
+    "questionText": "【问题 1】（6 分）\n(1) WebCodecs API 提供了对浏览器底层音视频硬编解码器的低级访问接口。用于解码 H.264/H.265 视频流的核心解码器接口类名称是 ______。\n(2) 解码器在每成功解出一帧后，通过回调函数输出的对象为 ______ 接口实例，该对象可直接上传给 WebGL 纹理或绘制到 Canvas 上。\n\n【问题 2】（9 分）\n(3) 为避免复杂视频转码与图像滤镜计算阻塞浏览器的主渲染进程导致界面掉帧卡顿，多媒体帧处理流水线应运行在后台的 ______ 线程中。\n(4) 在视频帧数据在主线程与后台工作线程之间传递时，为了避免深拷贝导致的内存浪费与性能瓶颈，应使用基于 ______（Transferable Objects）的零拷贝转移机制。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "VideoDecoder",
+        "acceptableAnswers": [
+          "VideoDecoder",
+          "videodecoder"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "VideoFrame",
+        "acceptableAnswers": [
+          "VideoFrame",
+          "videoframe"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "Web Worker",
+        "acceptableAnswers": [
+          "Web Worker",
+          "Worker",
+          "Worker线程"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "可转移对象",
+        "acceptableAnswers": [
+          "可转移对象",
+          "Transferable",
+          "Transferable Objects"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) VideoDecoder\n(2) VideoFrame\n(3) Web Worker（或 Worker 线程）\n(4) 可转移对象（Transferable Objects）",
+    "analysis": "【考点解析】\n1. WebCodecs 包含 VideoDecoder, VideoEncoder, AudioDecoder, AudioEncoder 等关键类。\n2. VideoFrame 是 WebCodecs 解码输出的核心结构，支持 `.timestamp`, `.format`, `.codedWidth`, `.close()` 等。\n3. postMessage 的 Transferable 机制允许将 ArrayBuffer、ImageBitmap、VideoFrame 的底层控制权直接转移到工作线程，避免内存拷贝。",
+    "totalScore": 15
+  },
+  {
+    "id": "2025-pm-04",
+    "year": 2025,
+    "questionNumber": 4,
+    "title": "试题四：3D Gaussian Splatting 与实时三维渲染管线",
+    "category": "计算机图形与虚拟现实",
+    "background": "【说明】\n某数字孪生三维可视化项目采用 3D Gaussian Splatting（3DGS）技术实现真实物理场景的逼真建模。相较于传统多边形网格（Mesh）建模与神经辐射场（NeRF），3DGS 使用显式三维高斯椭球基元表示场景，在保证高保真光照与半透明材质的同时，能够达到 100+ fps 的实时渲染速度。",
+    "questionText": "【问题 1】（6 分）\n(1) 3D 高斯基元由其三维中心空间位置、旋转姿态、缩放尺度、不透明度以及用于表达视线相关颜色与光照高光的 ______ 系数共同描述。\n(2) 在三维高斯椭球变换到屏幕二维坐标的过程中，需要将三维协方差矩阵通过视点变换与投影雅可比矩阵映射为二维 ______ 矩阵，以便进行光栅化混合。\n\n【问题 2】（9 分）\n(3) 在光栅化阶段，为了实现半透明基元的正确前后遮挡渲染，需要按照高斯中心到相机视点的深度对高斯基元进行从前到后排序，并采用 ______ 混合算法（Alpha Blending）计算最终像素颜色。\n(4) 与传统三维建模相比，多边形网格（Polygon Mesh）以顶点（Vertex）、边（Edge）和 ______（Face）为基础几何元素。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "球谐函数",
+        "acceptableAnswers": [
+          "球谐函数",
+          "球谐",
+          "SH",
+          "Spherical Harmonics"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "协方差",
+        "acceptableAnswers": [
+          "协方差",
+          "协方差矩阵",
+          "二维协方差"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "Alpha",
+        "acceptableAnswers": [
+          "Alpha",
+          "alpha",
+          "阿尔法",
+          "透明度"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "面",
+        "acceptableAnswers": [
+          "面",
+          "多边形面",
+          "面片",
+          "Face"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 球谐函数（Spherical Harmonics，SH）\n(2) 协方差（Covariance）矩阵\n(3) Alpha（或阿尔法，Alpha Blending）\n(4) 面（Face，多边形面片）",
+    "analysis": "【考点解析】\n1. 3DGS 使用球谐函数（SH）来模拟视角相关的视角光照效应（如镜面高光、菲涅尔反射）。\n2. 投影将三维协方差矩阵 $\\Sigma$ 变换为二维屏幕空间的 $\\Sigma'$。\n3. 光栅化阶段利用快速基数排序按深度排列高斯点，再利用 $\\alpha$-blending 累积颜色与透射率。",
+    "totalScore": 15
+  },
+  {
+    "id": "2025-pm-05",
+    "year": 2025,
+    "questionNumber": 5,
+    "title": "试题五：WebRTC 弱网拥塞控制与 SVC 可伸缩视频分发",
+    "category": "多媒体网络与流媒体传输",
+    "background": "【说明】\n某跨国多方视频互动会议系统采用 WebRTC 协议进行低延迟音视频通信。系统在公网复杂的弱网环境（抖动、丢包、带宽剧烈波动）下，需要保证核心语音与骨干画面的流畅度，引入了可伸缩视频编码（SVC）与 Transport-CC 拥塞控制反馈机制。",
+    "questionText": "【问题 1】（6 分）\n(1) 在 WebRTC 的 Transport-CC 机制中，接收端通过 RTCP 报文周期性向发送端反馈每个数据包的接收时间戳序列；发送端基于包间延迟梯度的变化，利用 ______ 滤波算法对信道排队延迟进行估计，从而预测网络是否发生拥塞。\n(2) 为应对丢包，发送端可以采用前向纠错（______）技术在媒体流中冗余发送校验包，使得接收端在丢失部分报文时无需重传即可通过异或或 RS 校验恢复丢失数据。\n\n【问题 2】（9 分）\n(3) 在可伸缩视频编码（SVC）中，视频码流被划分为一个基础层和若干个增强层。其中，能够根据网络带宽动态调整视频帧率（如在 15fps 和 30fps 之间升降）的分层维度称为 ______ 可伸缩性。\n(4) 视频会议服务端选用 SFU（选择性转发单元）架构，相比于传统在服务端完成全量画面解码重编码合成单流的 ______ 架构，具有服务器 CPU 负载低、延迟小的显著优势。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "卡尔曼",
+        "acceptableAnswers": [
+          "卡尔曼",
+          "Kalman",
+          "卡尔曼滤波"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "FEC",
+        "acceptableAnswers": [
+          "FEC",
+          "fec",
+          "前向纠错"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "时间",
+        "acceptableAnswers": [
+          "时间",
+          "时域",
+          "Temporal"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "MCU",
+        "acceptableAnswers": [
+          "MCU",
+          "mcu",
+          "多点控制单元"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 卡尔曼（Kalman，Kalman 滤波器）\n(2) FEC（Forward Error Correction，前向纠错）\n(3) 时间（或时域，Temporal Scalability）\n(4) MCU（Multipoint Control Unit，多点控制单元）",
+    "analysis": "【考点解析】\n1. WebRTC 的 Google Congestion Control (GCC) 算法在基于延迟估计阶段采用 Kalman Filter 滤波。\n2. 抗弱网三大法宝：NACK（丢包重传）、FEC（前向纠错冗余恢复）、JitterBuffer（抗抖动缓冲）。\n3. SVC 三大维度：空间可伸缩性（分辨率）、时间可伸缩性（帧率）、质量可伸缩性（SNR/信噪比）。\n4. SFU 只转发不做混合编解码，MCU 集中解码混合并重新编码。",
+    "totalScore": 15
+  },
+  {
+    "id": "2024-pm-01",
+    "year": 2024,
+    "questionNumber": 1,
+    "title": "试题一：超高清 4K/8K 图像采样与颜色空间转换",
+    "category": "数字图像处理",
+    "background": "【说明】\n某电视台搭建 4K 超高清制播系统，输入图像分辨率为 3840×2160，需处理从摄像头输入的 RGB 色彩信号到广播电视标准 YUV 色差信号的变换，并选择合适的色度子采样格式以降低内部矩阵切换器的带宽负载。",
+    "questionText": "【问题 1】（6 分）\n(1) 在色彩空间转换公式中，三基色信号按人眼对不同波长光敏感度加权生成亮度信号 Y。ITU-R BT.709 规范中亮度加权公式为 Y = 0.2126 R + 0.7152 G + ______ B。\n(2) 在广播电视制播中，色度子采样格式中如果相邻 4 个像素水平方向采样 4 个 Y、2 个 U、2 个 V，且相邻两行保持相同，该格式称为 4:2:2 采样；如果垂直方向隔行丢弃色度，仅采样每两行中的一行色度，该格式称为 ______ 采样。\n\n【问题 2】（9 分）\n(3) 某段 4K 视频（3840×2160）帧率为 50 fps，量化深度为 8 bit，采用 YUV 4:2:0 格式。请计算 1 秒钟内产生的原始视频数据量为 ______ MB（按 1 MB = 10^6 字节计算，保留整数）。\n(4) 图像数据经过正向二维离散余弦变换（DCT）后，能量主要集中在变换矩阵的左上角，该系数反映了整块图像的平均亮度，称为 ______ 系数，其余反映细节变化的系数称为交流（AC）系数。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "0.0722",
+        "acceptableAnswers": [
+          "0.0722",
+          ".0722"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "4:2:0",
+        "acceptableAnswers": [
+          "4:2:0",
+          "YUV420",
+          "420"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "622",
+        "acceptableAnswers": [
+          "622",
+          "622.08"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "直流",
+        "acceptableAnswers": [
+          "直流",
+          "DC",
+          "DC系数"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 0.0722\n(2) 4:2:0\n(3) 622（计算：3840×2160×1.5×1×50 字节 = 622,080,000 字节 ≈ 622 MB）\n(4) 直流（DC，Direct Current）",
+    "analysis": "【考点解析】\n1. BT.709 亮度公式：$Y = 0.2126R + 0.7152G + 0.0722B$。\n2. YUV 4:2:0 每个像素占 1.5 字节（8bit深度）。\n3. DCT 变换将空间域信号转换为频域，左上角为直流分量（DC），表征块平均灰度。",
+    "totalScore": 15
+  },
+  {
+    "id": "2024-pm-02",
+    "year": 2024,
+    "questionNumber": 2,
+    "title": "试题二：数字音频压缩标准与感知音频编码原理",
+    "category": "音频编码技术",
+    "background": "【说明】\n某音频流媒体平台为了在 128 kbps 码率下提供接近 CD 音质的音乐试听服务，技术团队分析了 MPEG-4 AAC 与 MP3 编码器。两类编码器均利用了人类听觉系统（HAS）的生理与心理声学模型来去除听觉感知冗余。",
+    "questionText": "【问题 1】（6 分）\n(1) 人耳对声音强度的感知并非线性，且人耳听觉灵敏度随频率变化。人耳最敏感的声音频率范围大约为 ______ Hz 到 4000 Hz。\n(2) 当一个较强声音和一个较弱声音同时出现时，较弱的声音会被较强的声音掩盖而无法被听到，这种现象称为频域掩蔽或 ______ 掩蔽；此外强音消失后短时间内弱音仍无法听到的现象称为时域掩蔽。\n\n【问题 2】（9 分）\n(3) 在 AAC 编码流程中，时频变换模块采用了具有 50% 重叠的改良离散余弦变换，其英文缩写是 ______，该变换能有效消除子带块边界的时域混叠效应。\n(4) 为了进一步提升立体声在低码率下的编码效率，AAC 引入了联合立体声技术，主要包含频带强度立体声（IS）和中间/侧边立体声，后者的英文简称为 ______ 立体声。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "2000",
+        "acceptableAnswers": [
+          "2000",
+          "1000",
+          "1000-2000",
+          "2000Hz"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "同时",
+        "acceptableAnswers": [
+          "同时",
+          "共存",
+          "频域",
+          "同时掩蔽"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "MDCT",
+        "acceptableAnswers": [
+          "MDCT",
+          "mdct"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "MS",
+        "acceptableAnswers": [
+          "MS",
+          "M/S",
+          "ms"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 2000（或 1000 ~ 2000）\n(2) 同时（或同时掩蔽）\n(3) MDCT（Modified Discrete Cosine Transform，修改的离散余弦变换）\n(4) MS（或 M/S，Middle/Side）",
+    "analysis": "【考点解析】\n1. 人耳听觉范围为 20Hz~20kHz，最敏感区间为 1kHz~4kHz（常考 2000Hz 左右）。\n2. 心理声学掩蔽包括频域掩蔽（同时掩蔽）与时域掩蔽（前向掩蔽与后向掩蔽）。\n3. MP3/AAC 均采用 MDCT（具有时域混叠消除特性的正交重叠变换）。\n4. M/S 立体声通过计算 $M=(L+R)/\\sqrt{2}, S=(L-R)/\\sqrt{2}$ 消除声道冗余。",
+    "totalScore": 15
+  },
+  {
+    "id": "2024-pm-03",
+    "year": 2024,
+    "questionNumber": 3,
+    "title": "试题三：WebGL 着色器与三维光照贴图渲染",
+    "category": "计算机图形学",
+    "background": "【说明】\n某网页端三维数字展车应用使用 WebGL 开发。为了在移动端浏览器实现汽车金属车漆与玻璃反光的逼真效果，图形开发人员在 GLSL 着色器中实现了经典的 Blinn-Phong 局部光照反射模型并配合环境映射贴图。",
+    "questionText": "【问题 1】（6 分）\n(1) 在 OpenGL/WebGL 可编程渲染管线中，处理每个模型顶点的空间坐标变换（模型变换、视图变换、投影变换）并输出屏幕裁剪坐标的着色器阶段是 ______ 着色器。\n(2) 在片元（像素）着色器中，Blinn-Phong 光照模型将光照反射分解为环境光（Ambient）、漫反射（Diffuse）和 ______（Specular）三个组成部分。\n\n【问题 2】（9 分）\n(3) 经典 Phong 模型在计算镜面高光时使用视线向量与反射光向量的夹角；而 Blinn-Phong 模型为了优化计算效率，引入了光源方向向量与视线方向向量的角平分线向量，称为 ______ 向量（Halfway Vector）。\n(4) 为了在车身表面模拟周围展厅环境的倒影，通常将全景图拆解贴在立方体的六个内表面，这种纹理技术称为 ______ 贴图（Cube Map）。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "顶点",
+        "acceptableAnswers": [
+          "顶点",
+          "Vertex",
+          "顶点着色器"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "镜面反射",
+        "acceptableAnswers": [
+          "镜面反射",
+          "镜面光",
+          "高光",
+          "Specular"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "半程",
+        "acceptableAnswers": [
+          "半程",
+          "半角",
+          "半向量",
+          "Halfway"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "立方体",
+        "acceptableAnswers": [
+          "立方体",
+          "Cube Map",
+          "立方体贴图",
+          "Cube贴图"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 顶点（Vertex 着色器）\n(2) 镜面反射（或镜面光/高光，Specular）\n(3) 半程（或半角向量，Halfway Vector）\n(4) 立方体（Cube Map，立方体环境贴图）",
+    "analysis": "【考点解析】\n1. WebGL 管线核心两级：顶点着色器（Vertex Shader）和片元着色器（Fragment Shader）。\n2. Blinn-Phong 镜面高光项公式：$I_{spec} = k_s (N \\cdot H)^s$，其中 $H = (L+V) / ||L+V||$ 为半程向量。\n3. 立方体贴图（Cube Map）通过 6 个纹理面采样实现天空盒（Skybox）与环境反射。",
+    "totalScore": 15
+  },
+  {
+    "id": "2024-pm-04",
+    "year": 2024,
+    "questionNumber": 4,
+    "title": "试题四：基于 AI 的超分辨率重构与帧插值技术",
+    "category": "智能多媒体技术",
+    "background": "【说明】\n某老旧影视经典修复工程需将 1080p@24fps 的历史黑白胶片数字化素材，提升修复为 4K@60fps 的超高清彩色影像。技术团队设计了一套融合深度学习的超分辨率网络（Super-Resolution）与双向运动估计光流插帧方案。",
+    "questionText": "【问题 1】（6 分）\n(1) 传统的图像插值算法（如最近邻插值、双线性插值、双三次插值）往往会导致重建图像边缘模糊或出现锯齿效应；而基于生成对抗网络（GAN）的超分辨率算法中，由生成器生成高分辨细节，由 ______ 判断输入图像是真实高分辨率照片还是重建伪造图像，通过两者的博弈对抗提升图像纹理保真度。\n(2) 在胶片去划痕与降噪过程中，利用图像局部自相似性的经典去噪算法称为非局部均值滤波，其英文缩写是 ______。\n\n【问题 2】（9 分）\n(3) 为了将 24fps 的视频平滑提升到 60fps，需要估算相邻两帧之间每个像素的运动位移场，这种基于图像灰度守恒假设计算像素运动向量的方法称为 ______ 法（Optical Flow）。\n(4) 当相邻两帧之间存在大幅度遮挡（Occlusion）或剧烈光照突变时，单纯前向运动估计会产生伪影，通常需要结合前向与后向光流进行 ______ 校验（Forward-Backward Consistency Check）来剔除不可靠插值区域。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "判别器",
+        "acceptableAnswers": [
+          "判别器",
+          "判别网络",
+          "Discriminator",
+          "D网络"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "NLM",
+        "acceptableAnswers": [
+          "NLM",
+          "nlm",
+          "Non-Local Means"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "光流",
+        "acceptableAnswers": [
+          "光流",
+          "Optical Flow",
+          "光流法"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "一致性",
+        "acceptableAnswers": [
+          "一致性",
+          "双向一致性",
+          "Consistency"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 判别器（Discriminator）\n(2) NLM（Non-Local Means，非局部均值）\n(3) 光流（Optical Flow）\n(4) 一致性（双向一致性，Consistency）",
+    "analysis": "【考点解析】\n1. GAN 核心结构由生成器（Generator）和判别器（Discriminator）组成。\n2. NLM 滤波器利用整幅图像中的自相似块权重平均，优于局部高斯滤波。\n3. 光流（Optical Flow）反映图像中物体的表面运动，常用 Lucas-Kanade 或 Horn-Schunck 算法。\n4. 双向一致性校验：若 $p + u_{fw}(p) + u_{bw}(p') \\approx p$ 则认为光流可靠，否则判定为遮挡。",
+    "totalScore": 15
+  },
+  {
+    "id": "2024-pm-05",
+    "year": 2024,
+    "questionNumber": 5,
+    "title": "试题五：现代低延迟流媒体 HLS/DASH 分发与 CMAF 切片",
+    "category": "流媒体分发技术",
+    "background": "【说明】\n某大型在线赛事直播平台在世界杯直播中面临百万级高并发访问。原有标准 HLS 协议分片时长为 6 秒，导致端到端延迟高达 20~30 秒。为了将直播延迟压缩到 2~3 秒以内并保持 CDN 缓存分发的高效率，团队实施了 Low-Latency HLS（LL-HLS）升级方案，采用通用媒体应用格式（CMAF）。",
+    "questionText": "【问题 1】（6 分）\n(1) 传统 HLS 直播使用 `.ts` 封装格式，而 CMAF 标准基于 ISO 基础媒体文件格式（ISOBMFF），其分片文件扩展名通常为 ______。\n(2) LL-HLS 能够实现超低延迟的关键在于将一个完整的短切片进一步细分为更小的分块，并通过 HTTP/1.1 的分块传输编码（Chunked Transfer Encoding）在编码器产出分块时立即推送到播放端，这种分块称为 ______（Chunk）。\n\n【问题 2】（9 分）\n(3) HLS 的播放索引文件采用文本格式，其主播放列表的后缀名通常为 ______。\n(4) 播放端为了在网络带宽发生波动时避免播放画面频繁卡顿，会根据当前测得的网络下载速率在多种预设码率的视频流之间动态无缝切换，这种技术称为自适应码率流（______，英文缩写为 ABR）。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "mp4",
+        "acceptableAnswers": [
+          "mp4",
+          ".mp4",
+          "m4s",
+          ".m4s"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "Chunk",
+        "acceptableAnswers": [
+          "Chunk",
+          "分块",
+          "微切片",
+          "片段"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "m3u8",
+        "acceptableAnswers": [
+          "m3u8",
+          ".m3u8",
+          "m3u"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "ABR",
+        "acceptableAnswers": [
+          "ABR",
+          "abr",
+          "自适应码率"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) mp4（或 .mp4 / .m4s）\n(2) Chunk（或分块 / 微片段）\n(3) m3u8（或 .m3u8）\n(4) ABR（Adaptive Bitrate，自适应码率）",
+    "analysis": "【考点解析】\n1. CMAF 使用分段 MP4 格式（ISOBMFF fMP4），统一了 HLS 与 MPEG-DASH 的底层切片容器。\n2. Chunked Transfer Encoding 允许编码器无需等待完整分片生成，即按 moof/mdat 原子块边编码边传输。\n3. HLS 索引文件为 UTF-8 编码的 M3U8 文件。\n4. ABR（Adaptive Bitrate）算法通过监控缓冲区水位与下行吞吐率，平滑升降码率阶梯。",
+    "totalScore": 15
+  },
+  {
+    "id": "2023-pm-01",
+    "year": 2023,
+    "questionNumber": 1,
+    "title": "试题一：H.265/HEVC 编码结构与环路滤波机制",
+    "category": "视频编码标准",
+    "background": "【说明】\n某智慧安防高清监控系统中，前端摄像机采集 1080p 视频并在嵌入式芯片中进行 H.265 实时编码。工程团队在调试码流参数时，需对编码单元结构、帧内预测模式数量以及编码环路滤波器参数进行优化，以平衡清晰度与边缘块效应。",
+    "questionText": "【问题 1】（6 分）\n(1) H.264 的宏块大小固定为 16×16 像素，而 H.265 引入了具有灵活层次结构的树状编码单元（CTU），并通过 ______ 树划分方法将其自适应递归拆分为编码单元（CU）、预测单元（PU）和变换单元（TU）。\n(2) 在亮度信号的帧内预测中，H.264 支持 9 种预测模式，而 H.265 将方向性帧内预测模式数量大幅提升至 ______ 种（包含平面 Planar 模式与直流 DC 模式共 35 种）。\n\n【问题 2】（9 分）\n(3) 在 DCT 变换与粗量化后，块边界易产生阶梯状视觉瑕疵，H.265 引入了 ______ 滤波（DBF）来平滑块边界。\n(4) 在 DBF 之后，为了恢复图像局部的高频轮廓与阶梯过渡带，H.265 新增了样点自适应补偿技术，其英文缩写是 ______。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "四叉",
+        "acceptableAnswers": [
+          "四叉",
+          "四叉树",
+          "Quad-Tree"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "33",
+        "acceptableAnswers": [
+          "33",
+          "33种",
+          "35"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "去块",
+        "acceptableAnswers": [
+          "去块",
+          "去块效应",
+          "去块滤波",
+          "Deblocking"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "SAO",
+        "acceptableAnswers": [
+          "SAO",
+          "sao",
+          "Sample Adaptive Offset"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 四叉（四叉树，Quad-tree）\n(2) 33（33 种角度方向模式 + Planar + DC = 35 种）\n(3) 去块（Deblocking Filter，去块效应滤波）\n(4) SAO（Sample Adaptive Offset，样点自适应补偿）",
+    "analysis": "【考点解析】\n1. HEVC 核心划分是递归四叉树（Quad-tree），CTU -> CU -> PU + TU。\n2. HEVC 帧内预测共有 35 种模式：0号为 Planar，1号为 DC，2~34号为 33 种角方向预测。\n3. 环路滤波双层机制：DBF 消除块效应，SAO（边沿补偿 EO 与带状补偿 BO）降低振铃效应。",
+    "totalScore": 15
+  },
+  {
+    "id": "2023-pm-02",
+    "year": 2023,
+    "questionNumber": 2,
+    "title": "试题二：MIDI 音乐接口规范与波表乐音合成",
+    "category": "数字音频技术",
+    "background": "【说明】\n某多媒体游戏开发团队为游戏背景音乐设计 MIDI 音效播放引擎。团队对标准 MIDI 文件的报文协议、音乐通道分配以及现代声卡中的波表合成器（Wavetable Synthesis）工作原理进行了技术评审。",
+    "questionText": "【问题 1】（6 分）\n(1) MIDI（乐器数字接口）传输的不是真正的声音波形数据，而是描述乐符演奏行为的 ______ 指令序列（如音符开启 Note On、音符关闭 Note Off、音符力度 Velocity 等）。\n(2) 标准 MIDI 文件格式中，所有音轨的数据都合并在单个音轨中的格式称为 0 类格式（Format 0）；而将不同乐器声部分别记录在多个独立音轨上的格式称为 ______ 类格式（Format 1）。\n\n【问题 2】（9 分）\n(3) 早期的声卡使用调频合成技术（FM）模拟乐器，音色失真较大；现代声卡普遍采用 ______ 合成技术，通过预先录制真实真实乐器的声音波形采样并存储在 ROM/RAM 中，播放时通过改变回放时钟或插值来还原逼真音色。\n(4) MIDI 规范中规定单个 MIDI 物理连接端口最多可支持 ______ 个独立的逻辑乐器通道（Channel），其中通常预留第 10 通道专门用于打击乐器。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "控制",
+        "acceptableAnswers": [
+          "控制",
+          "控制指令",
+          "事件",
+          "命令",
+          "数字控制"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "1",
+        "acceptableAnswers": [
+          "1",
+          "一",
+          "Format 1"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "波表",
+        "acceptableAnswers": [
+          "波表",
+          "Wavetable",
+          "波表合成"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "16",
+        "acceptableAnswers": [
+          "16",
+          "16个"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 控制（或控制指令/事件指令）\n(2) 1（Format 1 类格式）\n(3) 波表（Wavetable，波表合成技术）\n(4) 16",
+    "analysis": "【考点解析】\n1. MIDI 数据由状态字节（最高位为1）和数据字节（最高位为0）构成，是控制命令而非音频采样。\n2. SMF（Standard MIDI File）规范：Format 0（单轨包含所有通道）、Format 1（多轨同步）、Format 2（多轨异步序列）。\n3. 音频合成发展历程：FM 调频合成 -> Wavetable 波表合成 -> 物理模型合成。\n4. 4 bit 通道地址表示 0~15 共 16 个通道，Channel 10（编号 9）为打击乐专用通道。",
+    "totalScore": 15
+  },
+  {
+    "id": "2023-pm-03",
+    "year": 2023,
+    "questionNumber": 3,
+    "title": "试题三：三维计算机动画运动控制与关键帧插值",
+    "category": "计算机动画技术",
+    "background": "【说明】\n某三维动画制作组在 Maya 中制作角色动作。为了让机械臂与虚拟角色的关节旋转动作平滑自然，并避免万向节死锁（Gimbal Lock），动画师探讨了欧拉角、旋转矩阵与四元数（Quaternion）的数学表示与关键帧动画插值算法。",
+    "questionText": "【问题 1】（6 分）\n(1) 传统欧拉角旋转使用绕 X、Y、Z 三个坐标轴的旋转角度表示姿态。当俯仰角达到 ±90° 时，会导致一个转动自由度丢失，这种奇异性现象在图形学中称为 ______ 锁。\n(2) 四元数由一个标量和三个虚部基底构成，其代数形式记为 q = w + xi + yj + zk。为了表示纯粹的三维空间旋转变换，所采用的四元数模长必须等于 ______。\n\n【问题 2】（9 分）\n(3) 在关键帧旋转姿态平滑过渡时，若对两个四元数进行简单的线性插值（LERP）会导致角速度不均匀，因此通常采用沿四维单位超球面最短大圆弧插值的 ______ 线性插值算法（英文缩写为 SLERP）。\n(4) 角色骨骼动画中，从父骨骼的旋转和平移推导子骨骼末端空间位置的过程称为前向运动学（FK）；而根据手脚末端目标位置反求各关节点旋转角度的逆向求解过程称为 ______ 运动学（英文缩写为 IK）。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "万向节",
+        "acceptableAnswers": [
+          "万向节",
+          "万向节锁",
+          "Gimbal Lock",
+          "云台锁"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "1",
+        "acceptableAnswers": [
+          "1",
+          "一",
+          "单位1"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "球面",
+        "acceptableAnswers": [
+          "球面",
+          "SLERP",
+          "球面线性插值"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "反向",
+        "acceptableAnswers": [
+          "反向",
+          "逆向",
+          "逆",
+          "IK"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 万向节（Gimbal Lock，万向节死锁）\n(2) 1（单位四元数）\n(3) 球面（Spherical Linear Interpolation，球面线性插值，SLERP）\n(4) 反向（逆向，Inverse Kinematics，IK）",
+    "analysis": "【考点解析】\n1. 欧拉角的三轴嵌套在特定角度时两个轴重合产生万向节死锁。\n2. 单位四元数 $|q| = \\sqrt{w^2 + x^2 + y^2 + z^2} = 1$ 用于表示三维无奇异性连续旋转。\n3. SLERP 沿四维超球面按恒定角速度插值，公式：$SLERP(q_1, q_2; t) = \\frac{\\sin((1-t)\\theta)}{\\sin\\theta}q_1 + \\frac{\\sin(t\\theta)}{\\sin\\theta}q_2$。\n4. 骨骼动画两大求解：FK（正向动力学）与 IK（反向动力学）。",
+    "totalScore": 15
+  },
+  {
+    "id": "2023-pm-04",
+    "year": 2023,
+    "questionNumber": 4,
+    "title": "试题四：图像无损与有损压缩：算术编码与 Huffman 编码",
+    "category": "数据压缩理论",
+    "background": "【说明】\n某遥感卫星图像压缩子系统需对遥感多光谱图像数据进行高效熵编码。算法团队对比了传统的静态 Huffman 编码与现代自适应算术编码（Arithmetic Coding）在压缩效率与硬件实现开销上的差异。",
+    "questionText": "【问题 1】（6 分）\n(1) 根据信息论原理，设信源发出符号集合中各符号概率为 P_i，则信源的极限平均信息量称为信息 ______。\n(2) Huffman 编码为每个信源符号分配整数个二进制位（bit），因此当某个符号的发生概率极大（如 P > 0.5 时，理论信息量小于 1 bit）时，Huffman 编码会浪费信道带宽；而 ______ 编码可以将整个符号序列映射为 [0, 1) 区间内的一个高精度实数，理论上能够无限逼近信源熵极限。\n\n【问题 2】（9 分）\n(3) 某信源仅包含 A、B、C 三个符号，出现概率分别为 P(A)=0.5，P(B)=0.3，P(C)=0.2。采用算术编码时，初始区间为 [0, 1)。若输入的第一个编码符号为 B，则当前区间的左端点为 ______，右端点为 0.8。\n(4) 图像数据中相邻像素之间具有高度的数值相关性，这种相关性在信息压缩分类中属于 ______ 冗余（或空间冗余）。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "熵",
+        "acceptableAnswers": [
+          "熵",
+          "信源熵",
+          "信息熵"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "算术",
+        "acceptableAnswers": [
+          "算术",
+          "算术编码",
+          "Arithmetic Coding"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "0.5",
+        "acceptableAnswers": [
+          "0.5",
+          "0.50"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "空间",
+        "acceptableAnswers": [
+          "空间",
+          "空间冗余",
+          "结构冗余"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 熵（信息熵，Shannon 熵）\n(2) 算术（Arithmetic 编码）\n(3) 0.5（区间分配：A 为 [0, 0.5)，B 为 [0.5, 0.8)，C 为 [0.8, 1.0)）\n(4) 空间（空间冗余，Spatial Redundancy）",
+    "analysis": "【考点解析】\n1. Shannon 信息熵公式：$H(X) = -\\sum P(x_i) \\log_2 P(x_i)$。\n2. Huffman 编码每个码字必须是整数位（最低 1 bit），算术编码打破了整数位限制。\n3. 算术编码子区间细分公式：$L_{new} = L + (R-L) \\times P_{start}, R_{new} = L + (R-L) \\times P_{end}$。\n4. 多媒体冗余类型：空间冗余、时间冗余、感知冗余、信息熵冗余、结构冗余。",
+    "totalScore": 15
+  },
+  {
+    "id": "2023-pm-05",
+    "year": 2023,
+    "questionNumber": 5,
+    "title": "试题五：流媒体传输 RTSP 控制协议与 RTP/RTCP 报文交互",
+    "category": "流媒体协议",
+    "background": "【说明】\n某智能交通视频联网监控中心客户端通过 RTSP 协议从网络硬盘录像机（NVR）请求实时路况监控视频流。视频数据流封装在 RTP 报文中基于 UDP 协议进行传输，RTCP 报文负责服务质量监控。",
+    "questionText": "【问题 1】（6 分）\n(1) RTSP 协议是一个类似于 HTTP 的文本控制协议。客户端向服务端请求获取媒体流的描述信息（如编码格式、分辨率、时钟频率等 SDP 信息）时，发送的 RTSP 请求方法是 ______。\n(2) 客户端通过 ______ 方法请求建立音视频传输通道并与服务端协商 RTP/RTCP 端口号，随后发送 PLAY 方法开始视频回放。\n\n【问题 2】（9 分）\n(3) RTP 报文头部中，用于指示连续数据包的顺序以便接收端检测丢包并重新对乱序包进行重组排序的字段是 ______（Sequence Number）。\n(4) 在 RTCP 报文中，发送端周期性向接收端发送发送端报告（SR），而接收端向发送端发送接收端报告（RR）。发送端根据 RR 报文中的丢包率与往返时间（______，英文缩写为 RTT）动态调整发包策略。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "DESCRIBE",
+        "acceptableAnswers": [
+          "DESCRIBE",
+          "describe"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "SETUP",
+        "acceptableAnswers": [
+          "SETUP",
+          "setup"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "序列号",
+        "acceptableAnswers": [
+          "序列号",
+          "Sequence Number",
+          "包序号",
+          "序号"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "RTT",
+        "acceptableAnswers": [
+          "RTT",
+          "rtt",
+          "往返时延",
+          "往返时间"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) DESCRIBE\n(2) SETUP\n(3) 序列号（Sequence Number，16 位）\n(4) RTT（Round-Trip Time，往返时间）",
+    "analysis": "【考点解析】\n1. RTSP 典型控制序列：OPTIONS -> DESCRIBE -> SETUP -> PLAY -> TEARDOWN。\n2. RTP 头含 16 位序列号（Sequence Number，检测乱序和丢包）与 32 位时间戳（Timestamp，同步播放）。\n3. RTCP 报告包含 SR（Sender Report）、RR（Receiver Report）、BYE、APP 等，用于 QoS 统计。",
+    "totalScore": 15
+  },
+  {
+    "id": "2022-pm-01",
+    "year": 2022,
+    "questionNumber": 1,
+    "title": "试题一：JPEG 图像压缩国际标准与二维 DCT 变换",
+    "category": "图像压缩编码",
+    "background": "【说明】\n某数码相机图像处理器将 CMOS 感光元件拍摄的原始 RAW 图像转换保存为标准 JPEG 文件。技术人员分析了 JPEG 标准中针对连续色调静止图像的 Baseline 压缩算法流程，包括颜色空间转换、分块、DCT 变换、量化、锯齿形（Zig-zag）扫描和熵编码。",
+    "questionText": "【问题 1】（6 分）\n(1) JPEG 压缩编码前，通常先将图像分割为 ______×8 的小像素块作为离散余弦变换（DCT）的基本处理单元。\n(2) DCT 变换本身是无损的，真正引起信息损失（有损压缩）并决定图像压缩质量比例的关键步骤是 ______。\n\n【问题 2】（9 分）\n(3) 量化后得到的 64 个变换系数中，高频系数大多变为 0。为了把低频有效能量集中在一起并产生尽可能长的连续“0”串以利于游程编码，需要对这 64 个二维系数按 ______ 形（Zig-zag）顺序排列为一维数组。\n(4) 某幅 1024×768 像素的 24 位真彩色图像，若未经压缩，其原始位图数据量为 ______ KB（按 1 KB = 1024 字节计算，保留整数）。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "8",
+        "acceptableAnswers": [
+          "8",
+          "8x8"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "量化",
+        "acceptableAnswers": [
+          "量化",
+          "除法量化",
+          "系数加权量化"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "Z",
+        "acceptableAnswers": [
+          "Z",
+          "之",
+          "之字",
+          "之字形",
+          "Zig-zag",
+          "Z字形"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "2304",
+        "acceptableAnswers": [
+          "2304",
+          "2304KB"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 8（8×8 像素块）\n(2) 量化（Quantization）\n(3) Z（或之字形、Zig-zag）\n(4) 2304（计算：1024×768×3 字节 = 2,359,296 字节 ÷ 1024 = 2304 KB）",
+    "analysis": "【考点解析】\n1. JPEG Baseline 算法标准块大小为 8×8。\n2. DCT、Z字形扫描、Huffman 编码都是无损运算，仅有除以量化表并取整的“量化”过程是有损的。\n3. 之字形（Zig-zag）扫描按频率由低到高遍历 8×8 矩阵，最大化 0 的连续长度以配合 RLE。\n4. 24 位真彩色占 3 个字节：1024×768×3 / 1024 = 2304 KB（恰好为 2.25 MB）。",
+    "totalScore": 15
+  },
+  {
+    "id": "2022-pm-02",
+    "year": 2022,
+    "questionNumber": 2,
+    "title": "试题二：脉冲编码调制 PCM 与 A 律 13 折线非均匀量化",
+    "category": "数字音频处理",
+    "background": "【说明】\n某电信语音通信网络采用脉冲编码调制（PCM）体制将模拟电话语音转换为数字信号传输。为了解决均匀量化时“小信号信噪比过低”的问题，我国和欧洲通信标准采用了 A 律 13 折线压扩非均匀量化技术。",
+    "questionText": "【问题 1】（6 分）\n(1) 模拟信号转换为数字信号必须经过采样、______ 和编码三个核心步骤。\n(2) 根据奈奎斯特采样定理，若电话语音信号的最高有效频率限制在 3.4 kHz，为了无失真恢复原信号，采样频率至少应大于原信号最高频率的 ______ 倍，我国电话通信系统中标准采样频率设定为 8 kHz。\n\n【问题 2】（9 分）\n(3) A 律 13 折线编码器输出的 PCM 码字为 8 位二进制码，其中最高位为极性码，第 2~4 位为 ______ 码，用来指示采样值落在 8 个正段落中的哪一段。\n(4) 经过 8 kHz 采样、8 bit 编码后的单路标准数字电话信道，其传输速率为 ______ kbps。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "量化",
+        "acceptableAnswers": [
+          "量化",
+          "Quantization"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "2",
+        "acceptableAnswers": [
+          "2",
+          "两",
+          "2倍"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "段落",
+        "acceptableAnswers": [
+          "段落",
+          "段",
+          "段落码",
+          "段内码"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "64",
+        "acceptableAnswers": [
+          "64",
+          "64kbps"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 量化（Quantization）\n(2) 2（两倍）\n(3) 段落（段落码，共 3 位表示 8 个段落）\n(4) 64（计算：8,000 次/秒 × 8 bit = 64,000 bps = 64 kbps）",
+    "analysis": "【考点解析】\n1. 模数转换（ADC）三大步骤：采样（离散化时间）、量化（离散化幅度）、编码（二进制表示）。\n2. Nyquist 定理：$f_s \\ge 2 f_{max}$。\n3. A 律 13 折线 8 位 PCM 编码结构：C1 极性码（正负），C2C3C4 段落码（0~7 共 8 段），C5C6C7C8 段内电平码（16 等分）。\n4. 单路标准 PCM 语音带宽：$8kHz \\times 8bit = 64kbps$。",
+    "totalScore": 15
+  },
+  {
+    "id": "2022-pm-03",
+    "year": 2022,
+    "questionNumber": 3,
+    "title": "试题三：贝塞尔（Bézier）曲线拟合与矢量字形轮廓生成",
+    "category": "计算机图形学与矢量字体",
+    "background": "【说明】\n某矢量字库设计引擎需要根据控制点生成平滑的矢量字体轮廓。TrueType 与 OpenType 字体规范分别采用了二次与三次贝塞尔曲线描述字符的外轮廓边缘。开发人员对贝塞尔曲线的凸包性、端点切线及递推去卡斯特里奥（de Casteljau）算法进行了公式推导。",
+    "questionText": "【问题 1】（6 分）\n(1) 二次贝塞尔曲线由 3 个控制点（P0 起点、P1 控制点、P2 终点）定义，其曲线方程是以伯恩斯坦（Bernstein）基函数为权重的线性组合，基函数的多项式次数为 ______ 次。\n(2) 贝塞尔曲线的一个重要几何特性是：整条曲线始终包含在其全部控制点所构成的最小凸多边形内部，该特性称为 ______ 性。\n\n【问题 2】（9 分）\n(3) 在曲线连接处为了达到一阶连续（C1 连续），前一条曲线的终点、终点处的控制点与后一条曲线的起点处的控制点必须共线且方向相同；若要求更高平滑度的曲率连续，则两段曲线需达到 ______ 连续。\n(4) 矢量图形相较于点阵位图（Bitmap），最显著的优势是在放大、缩小或旋转操作后，图形边缘不会出现失真与 ______ 现象。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "2",
+        "acceptableAnswers": [
+          "2",
+          "二",
+          "二次"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "凸包",
+        "acceptableAnswers": [
+          "凸包",
+          "凸包性",
+          "Convex Hull"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "C2",
+        "acceptableAnswers": [
+          "C2",
+          "二阶",
+          "G2",
+          "曲率"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "锯齿",
+        "acceptableAnswers": [
+          "锯齿",
+          "马赛克",
+          "模糊"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 2（二次）\n(2) 凸包（Convex Hull 性质）\n(3) C2（或二阶连续/G2）\n(4) 锯齿（或马赛克/模糊）",
+    "analysis": "【考点解析】\n1. n 阶 Bézier 曲线由 n+1 个控制点确定，Bernstein 基函数次数为 n。\n2. 凸包性（Convex Hull）：$B(t) = \\sum_{i=0}^n B_{i,n}(t) P_i$，且 $\\sum B_{i,n}(t) = 1$。\n3. 曲线连续性：C0（位置连续连接）、C1（切线方向与大小一致）、C2（曲率连续）。\n4. 矢量图用数学公式描述点线面，无级缩放不失真无锯齿。",
+    "totalScore": 15
+  },
+  {
+    "id": "2022-pm-04",
+    "year": 2022,
+    "questionNumber": 4,
+    "title": "试题四：图像直方图均衡化与对比度增强",
+    "category": "数字图像处理算法",
+    "background": "【说明】\n某医学 X 光显影系统采集的胸片图像由于曝光不足，整体偏暗且病灶对比度极低。图像处理工程师采用灰度直方图均衡化（Histogram Equalization）算法将原图像有限的灰度动态范围展开到整个 [0, 255] 区间，以增强细节辨识度。",
+    "questionText": "【问题 1】（6 分）\n(1) 灰度直方图是图像灰度级的统计函数，其横坐标表示灰度级，纵坐标表示该灰度级在图像中出现的 ______ 或频数。\n(2) 直方图均衡化的数学原理是寻找一个单调递增的灰度变换函数 s = T(r)，使得变换后的图像灰度概率密度函数变为均匀分布，这个变换函数正是原图像灰度的累积分布函数（英文缩写为 ______）。\n\n【问题 2】（9 分）\n(3) 设原图像共有 L 个灰度级（如 8 bit 图像 L=256），某个像素的原始灰度累积概率为 0.25，则经过直方图均衡化映射后，其新的灰度值约为 ______（取整数）。\n(4) 普通直方图均衡化是在整幅图像全局统计，容易导致背景噪点过度放大；为了克服此缺点，可以采用限制对比度自适应直方图均衡化算法，其英文简称是 ______。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "概率",
+        "acceptableAnswers": [
+          "概率",
+          "出现概率",
+          "频率",
+          "百分比"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "CDF",
+        "acceptableAnswers": [
+          "CDF",
+          "cdf",
+          "累积分布函数"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "64",
+        "acceptableAnswers": [
+          "64",
+          "63"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "CLAHE",
+        "acceptableAnswers": [
+          "CLAHE",
+          "clahe"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 概率（或频率/频数）\n(2) CDF（Cumulative Distribution Function，累积分布函数）\n(3) 64（计算：$(256-1) \\times 0.25 = 255 \\times 0.25 = 63.75 \\approx 64$ 或按 $256 \\times 0.25 = 64$）\n(4) CLAHE（Contrast Limited Adaptive Histogram Equalization）",
+    "analysis": "【考点解析】\n1. 直方图归一化后表示各个灰度级的概率密度 $P(r_k) = n_k / N$。\n2. 连续变量下，若 $s = T(r) = \\int_0^r p_r(w)dw$，则输出 $p_s(s) = 1$ 为理想均匀分布。\n3. 离散映射公式：$s_k = \\text{round}((L-1) \\times \\sum_{j=0}^k P(r_j))$。\n4. CLAHE（对比度受限自适应直方图均衡）通过截断过高直方图峰值并重新平分，有效抑制局部噪点。",
+    "totalScore": 15
+  },
+  {
+    "id": "2022-pm-05",
+    "year": 2022,
+    "questionNumber": 5,
+    "title": "试题五：多媒体著作工具架构与事件驱动交互模型",
+    "category": "多媒体交互系统设计",
+    "background": "【说明】\n某虚拟互动教学软件开发项目选用多媒体创作工具开发课件。系统要求在场景中播放教学视频、同步展示字幕文本，并响应用户的鼠标点击、拖拽与键盘按键输入，控制三维模型旋转与试题作答。",
+    "questionText": "【问题 1】（6 分）\n(1) 多媒体创作工具按其创作组织结构模型主要分为基于时间的工具（如 Flash/Director）、基于卡片/页面的工具（如 ToolBook）以及基于 ______ 图或流程图的工具（如 Authorware）。\n(2) 在图形用户界面（GUI）多媒体程序中，程序的流程不再是单一顺序执行，而是由外部环境或用户行为触发的信号驱动，这种软件架构模式称为 ______ 驱动（Event-Driven）模型。\n\n【问题 2】（9 分）\n(3) 在多媒体同步机制中，视频画面的唇形动作与配音语音之间的时间对齐属于媒介内（Intra-media）同步还是媒介间（______）同步。\n(4) 国际标准化组织制定的超媒体与基于时间的结构化文档国际标准规范是 ______（如 SMIL 或 MHEG），允许开发者以 XML 标签声明多媒体元素的时间并行（par）与顺序（seq）关系。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "图标",
+        "acceptableAnswers": [
+          "图标",
+          "流程图",
+          "流线"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "事件",
+        "acceptableAnswers": [
+          "事件",
+          "Event",
+          "消息"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "媒介间",
+        "acceptableAnswers": [
+          "媒介间",
+          "Inter-media",
+          "媒体间"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "SMIL",
+        "acceptableAnswers": [
+          "SMIL",
+          "smil",
+          "MHEG",
+          "MPEG-4 BIFS"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 图标（或图标/流线型，如 Authorware）\n(2) 事件（事件驱动，Event-Driven）\n(3) 媒介间（Inter-media 同步）\n(4) SMIL（Synchronized Multimedia Integration Language）",
+    "analysis": "【考点解析】\n1. 经典多媒体工具三大类：基于时间轴（Timeline）、基于卡片页（Card）、基于图标流程线（Icon-based）。\n2. 交互程序核心是事件循环（Event Loop）与事件监听器（Listener）。\n3. 多媒体同步两类：媒介内同步（如视频帧率均匀播放）与媒介间同步（如音画同步唇同步）。\n4. W3C 推荐的同步多媒体集成语言是 SMIL，支持 `<seq>`（顺序）与 `<par>`（并行）标签。",
+    "totalScore": 15
+  },
+  {
+    "id": "2021-pm-01",
+    "year": 2021,
+    "questionNumber": 1,
+    "title": "试题一：数字电视广播 DVB 与 MPEG-2 传输流 TS 结构",
+    "category": "数字电视与传输流",
+    "background": "【说明】\n某广播电视前端机房对高清数字电视频道信号进行复用处理。多路经过 MPEG-2/H.264 编码的音视频基本流（ES）被打包为 PES，再通过复用器交织混合为统一的传输流（TS，Transport Stream）经由 QAM 调制器送往有线电视 HFC 网络。",
+    "questionText": "【问题 1】（6 分）\n(1) 编码器输出的未经打包的视频或音频连续数据流称为基本流（ES）；将 ES 切割并加入时间戳等头部信息后生成的连续可变长度数据包流称为 ______（英文缩写为 PES）。\n(2) TS 传输流数据包具有固定的长度，以方便网络硬件在信道误码时快速重获同步，标准 TS 数据包的固定长度为 ______ 字节。\n\n【问题 2】（9 分）\n(3) 每个 TS 包头的前 8 bit 为固定的同步字节（Sync Byte），其十六进制数值为 0x______。\n(4) 接收端数字电视机顶盒为了正确区分交织在同一个频点中的不同节目（频道）的音视频数据，依赖于 TS 头部的 13 位包标识符（英文缩写为 ______），并配合节目关联表（PAT）与节目映射表（PMT）解复用。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "PES",
+        "acceptableAnswers": [
+          "PES",
+          "pes",
+          "打包基本流"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "188",
+        "acceptableAnswers": [
+          "188",
+          "188字节",
+          "188B"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "47",
+        "acceptableAnswers": [
+          "47",
+          "0x47"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "PID",
+        "acceptableAnswers": [
+          "PID",
+          "pid",
+          "Packet Identifier"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) PES（Packetized Elementary Stream）\n(2) 188（字节）\n(3) 47（0x47）\n(4) PID（Packet Identifier，包标识符）",
+    "analysis": "【考点解析】\n1. ES（基本流） -> PES（打包基本流） -> TS（传输流，固定188字节）/ PS（节目流，适用于光盘存储）。\n2. TS 包结构：4 字节包头 + 184 字节负载 = 188 字节。包头首字节必为 0x47（01000111）。\n3. 13 位 PID 唯一标识流属性（如 PAT 的 PID 恒为 0x0000）。",
+    "totalScore": 15
+  },
+  {
+    "id": "2021-pm-02",
+    "year": 2021,
+    "questionNumber": 2,
+    "title": "试题二：CD 激光唱片数字音频规范与双声道立体声",
+    "category": "光盘存储与数字音频",
+    "background": "【说明】\n飞利浦（Philips）与索尼（Sony）公司联合制定的“红皮书”（Red Book）标准奠定了高保真 CD-DA 数字光盘的物理与逻辑规范。工程师对光盘坑点物理反射、CIRC 纠错编码以及立体声音频速率进行了计算核准。",
+    "questionText": "【问题 1】（6 分）\n(1) 标准 CD 激光唱片采用双声道立体声录音，其规定的音频采样频率为 ______ kHz，量化位数设定为 16 bit。\n(2) 光盘表面通过螺旋状微小凹坑和平面记录二进制信息，激光照射凹坑边缘产生的光程差使得反射光发生相消干涉。为从读取的信号中提取稳定的时钟，CD 采用了将 8 位数据映射为 14 位信道位的调制技术，称为 ______ 调制（EFM）。\n\n【问题 2】（9 分）\n(3) 请计算一张录音时长为 74 分钟的标准 CD 唱片，所能记录的未压缩纯音频数据容量约为 ______ MB（按 1 MB = 1024×1024 字节计算，保留整数）。\n(4) 为了防止光盘受到灰尘划痕损坏导致大片数据丢失，红皮书采用了交叉交织里德-索罗门纠错码，其英文缩写是 ______。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "44.1",
+        "acceptableAnswers": [
+          "44.1",
+          "44.1kHz",
+          "44100"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "EFM",
+        "acceptableAnswers": [
+          "EFM",
+          "efm",
+          "8-14调制",
+          "八到十四调制"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "747",
+        "acceptableAnswers": [
+          "747",
+          "747.8",
+          "746",
+          "750"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "CIRC",
+        "acceptableAnswers": [
+          "CIRC",
+          "circ"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 44.1（kHz）\n(2) EFM（Eight-to-Fourteen Modulation，八到十四调制）\n(3) 747（计算：44,100 × (16/8) × 2 × (74 × 60) 字节 = 783,216,000 字节 ÷ (1024×1024) ≈ 746.93 MB）\n(4) CIRC（Cross-Interleaved Reed-Solomon Code）",
+    "analysis": "【考点解析】\n1. CD 音频规范：44.1kHz（覆盖 20kHz 人耳上限并留出过渡带）、16bit、双声道。\n2. CD 数据传输速率：$44,100 \\times 16 \\times 2 = 1,411.2 kbps = 176.4 KB/s$（即 1X 光驱基础速率）。\n3. 74 分钟音频容量约 747 MB（数据 CD 去除更强的二级 ECC 校验后约 650~700 MB）。\n4. EFM（8-14调制）限制连续 0 的长度，配合 CIRC 双层纠错实现极强抗划痕能力。",
+    "totalScore": 15
+  },
+  {
+    "id": "2021-pm-03",
+    "year": 2021,
+    "questionNumber": 3,
+    "title": "试题三：三维计算机图形学几何变换矩阵与投影管线",
+    "category": "计算机图形学与几何变换",
+    "background": "【说明】\n某三维实时交互引擎在处理三维模型空间坐标映射时，使用齐次坐标（Homogeneous Coordinates）与 4×4 变换矩阵。系统需依次完成局部模型坐标系到世界坐标系、相机视点坐标系、屏幕裁剪坐标系的一系列几何变换。",
+    "questionText": "【问题 1】（6 分）\n(1) 在三维笛卡尔直角坐标系中，平移变换无法用三阶矩阵相乘的形式表示；为了将旋转、缩放、错切和平移变换统一表示为矩阵乘法，图形学引入了 ______ 坐标，用四维向量 (x, y, z, w) 表示三维空间点。\n(2) 当四维齐次坐标中分量 w = 1 时表示空间中的一个几何点；当 w = ______ 时表示一个只有方向而无位置的向量。\n\n【问题 2】（9 分）\n(3) 在观察变换（View Transformation）中，需要定义相机的空间位置、注视目标点以及相机的指示向上的视线上方向向量，该向量通常称为 ______ 向量（Up Vector）。\n(4) 投影变换主要分为正交投影和平行透视投影。其中能产生“近大远小”真实视觉纵深感、视锥体呈现棱台状的投影方式称为 ______ 投影（Perspective Projection）。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "齐次",
+        "acceptableAnswers": [
+          "齐次",
+          "齐次坐标",
+          "Homogeneous"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "0",
+        "acceptableAnswers": [
+          "0",
+          "零"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "Up",
+        "acceptableAnswers": [
+          "Up",
+          "up",
+          "向上",
+          "上向量"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "透视",
+        "acceptableAnswers": [
+          "透视",
+          "透视投影",
+          "Perspective"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 齐次（齐次坐标，Homogeneous Coordinates）\n(2) 0（点 w=1，向量 w=0）\n(3) Up（或向上向量 / Camera Up Vector）\n(4) 透视（Perspective 投影）",
+    "analysis": "【考点解析】\n1. 齐次坐标统一了刚体仿射变换（平移+旋转+缩放）为 $4 \\times 4$ 矩阵相乘。\n2. 向量平移后不变，故第四维 $w=0$ 使平移列失效；点具有具体位置，故 $w=1$。\n3. 相机外参（LookAt 矩阵）由 Eye（视点）、Target（目标）、Up（向上向量）构造正交坐标基底。\n4. 正交投影（平行投射，无视差变形，常用于工程制图）；透视投影（视锥体 Frustum，具有灭点和透视缩放）。",
+    "totalScore": 15
+  },
+  {
+    "id": "2021-pm-04",
+    "year": 2021,
+    "questionNumber": 4,
+    "title": "试题四：数字图像形态学运算与边缘检测算子",
+    "category": "数字图像处理与模式识别",
+    "background": "【说明】\n某工业机器视觉自动装配线对精密零件进行表面缺陷检测。由于车间光照不均匀，采集到的灰度图像存在毛刺与孔洞。视觉算法工程师采用二值形态学滤波并结合一阶微分与二阶微分边缘检测算子提取零件精确轮廓。",
+    "questionText": "【问题 1】（6 分）\n(1) 二值图像形态学处理中最基础的两个运算是膨胀（Dilation）和腐蚀（Erosion）。先进行腐蚀操作、紧接着再进行膨胀操作的组合运算能够消除细小物体、平滑物体轮廓并断开细小狭颈，该组合运算称为 ______ 运算。\n(2) 相反，先膨胀后腐蚀的组合运算能够填充物体内部的细小空洞、填补断裂边缘，该组合运算称为 ______ 运算。\n\n【问题 2】（9 分）\n(3) 在边缘检测中，Sobel 算子在中心点周围引入了加权系数，其本质属于 ______ 阶微分算子，对图像噪声具有一定的平滑抑制作用。\n(4) 著名的 Canny 边缘检测算子包含高斯滤波降噪、计算梯度幅度与方向、非极大值抑制（NMS）以及使用 ______ 阈值算法（Dual Thresholding）连接强边缘与弱边缘四个完整阶段。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "开",
+        "acceptableAnswers": [
+          "开",
+          "开运算",
+          "Opening"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "闭",
+        "acceptableAnswers": [
+          "闭",
+          "闭运算",
+          "Closing"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "一",
+        "acceptableAnswers": [
+          "一",
+          "1",
+          "一阶"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "双",
+        "acceptableAnswers": [
+          "双",
+          "高低",
+          "双阈值",
+          "双阈值法"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 开（开运算，Opening）\n(2) 闭（闭运算，Closing）\n(3) 一（一阶微分算子）\n(4) 双（双阈值算法 / 滞后阈值处理）",
+    "analysis": "【考点解析】\n1. 形态学四大基石：腐蚀（收缩减小）、膨胀（扩张增大）、开运算（先腐后膨，消除孤立毛刺点）、闭运算（先膨后腐，填补细缝漏洞）。\n2. 边缘检测算子分类：一阶微分算子（Roberts、Prewitt、Sobel）、二阶微分算子（Laplacian、LoG 高斯拉普拉斯）。\n3. Canny 最优边缘算子第四步采用高、低两个滞后双阈值，强边缘直接保留，弱边缘根据与强边缘连通性保留。",
+    "totalScore": 15
+  },
+  {
+    "id": "2021-pm-05",
+    "year": 2021,
+    "questionNumber": 5,
+    "title": "试题五：网络流媒体 RTMP 协议与视频直播架构",
+    "category": "流媒体分发技术",
+    "background": "【说明】\n某电商直播系统采用 RTMP（Real-Time Messaging Protocol）进行主播端推流。系统架构由主播推流客户端、OBS 编码推流推至边缘 SRS 媒体流服务器，再由 CDN 节点通过 HTTP-FLV 和 HLS 分发至观众端手机和网页。",
+    "questionText": "【问题 1】（6 分）\n(1) RTMP 协议由 Adobe 公司制定，工作在 OSI 参考模型的应用层，其底层传输层采用可靠的 ______ 协议，默认监听的服务端口号为 1935。\n(2) 客户端与流媒体服务器建立 RTMP 连接前，必须先进行三次经典的握手报文交换（C0/C1/C2 与 S0/S1/S2），握手成功后客户端发送 ______ 命令创建与具体应用（如 live 频道）的连接。\n\n【问题 2】（9 分）\n(3) RTMP 为了在单个底层长连接上实现多路不同类型数据（音视频流、控制命令、元数据）的交织传输，将媒体数据拆分成固定或可变大小的数据块，称为 ______（Chunk）。\n(4) 当主播端网络带宽突发变窄导致上行拥塞时，流媒体服务器若持续堆积未确认的数据包，会导致直播画面出现不可逆的严重累计时延，工程中常见的应对策略是丢弃非参考帧（如 ______ 帧）以维持低时延。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "TCP",
+        "acceptableAnswers": [
+          "TCP",
+          "tcp"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "connect",
+        "acceptableAnswers": [
+          "connect",
+          "connect命令"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "块",
+        "acceptableAnswers": [
+          "块",
+          "分块",
+          "Chunk",
+          "切块"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "B",
+        "acceptableAnswers": [
+          "B",
+          "B帧",
+          "双向预测帧"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) TCP\n(2) connect\n(3) 块（分块，Chunk）\n(4) B（B帧，双向预测帧）",
+    "analysis": "【考点解析】\n1. RTMP 基于 TCP 保持持久连接，端口 1935。\n2. RTMP 命令交互：Handshake (C0/S0/C1/S1/C2/S2) -> connect -> createStream -> publish / play。\n3. Chunk 流传输机制：每个 Chunk 带 1~11 字节头，默认最大块大小 128 字节，避免大音频/视频包独占信道阻塞心跳。\n4. 丢帧保时延策略：优先丢弃不被后续帧作为参考的 B 帧，其次丢弃 P 帧，绝对不能轻易丢弃 I 关键帧。",
+    "totalScore": 15
+  },
+  {
+    "id": "2020-pm-01",
+    "year": 2020,
+    "questionNumber": 1,
+    "title": "试题一：多媒体个人计算机 MPC 性能指标与声卡原理",
+    "category": "计算机多媒体硬件系统",
+    "background": "【说明】\n某学校多媒体机房进行升级改造，采购多媒体个人计算机（MPC）。机房管理员需对多媒体计算机的硬件配置、声卡核心部件及总线带宽进行技术验收，对声卡上的数模转换器（DAC）、DSP 芯片及功放电路功能进行了检查。",
+    "questionText": "【问题 1】（6 分）\n(1) 声卡是多媒体计算机处理音频的核心适配器。计算机中存储的数字音频数据若要通过扬声器或耳机播放出发声，必须经过声卡中的 ______ 转换器（英文缩写为 DAC）转换为连续的模拟音频电信号。\n(2) 现代专业声卡为了减轻主 CPU 在混响、三维空间音效计算和声学回声消除（AEC）上的运算负担，通常搭载了专用的数字信号处理器，其英文缩写是 ______。\n\n【问题 2】（9 分）\n(3) 声卡外部通常配备多种不同颜色的 3.5mm 音频插孔，根据 PC99 国际规范，用于连接立体声耳麦麦克风输入的插孔标准外观颜色通常是 ______ 色。\n(4) 某声卡支持 16 bit 量化精度，其理论最大动态范围约为 ______ dB（提示：每增加 1 bit 量化精度，理论信噪比/动态范围提高约 6.02 dB）。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "数模",
+        "acceptableAnswers": [
+          "数模",
+          "数/模",
+          "DAC",
+          "数模转换"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "DSP",
+        "acceptableAnswers": [
+          "DSP",
+          "dsp"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "粉红",
+        "acceptableAnswers": [
+          "粉红",
+          "粉",
+          "粉红色",
+          "红色"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "96",
+        "acceptableAnswers": [
+          "96",
+          "98",
+          "96dB",
+          "96.32"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 数模（DAC，Digital to Analog Converter）\n(2) DSP（Digital Signal Processor）\n(3) 粉红（粉红色 / Pink）\n(4) 96（计算：$16 \\times 6.02 \\approx 96.32$ dB）",
+    "analysis": "【考点解析】\n1. ADC：模数转换（录音）；DAC：数模转换（放音）。\n2. DSP 芯片具有硬件乘加单元（MAC），专用于滤波、FFT、混音算法。\n3. PC99 声卡标准颜色：粉红（Mic In 麦克风）、浅绿（Line Out 耳机/音箱输出）、淡蓝（Line In 线路输入）。\n4. 理论信噪比与动态范围公式：$SNR \\approx 6.02 \\times N + 1.76$ dB，16 bit 约为 96~98 dB。",
+    "totalScore": 15
+  },
+  {
+    "id": "2020-pm-02",
+    "year": 2020,
+    "questionNumber": 2,
+    "title": "试题二：静止图像无损压缩技术与行程长度编码（RLE）",
+    "category": "无损数据压缩算法",
+    "background": "【说明】\n某传真机与二值文档扫描管理系统需要对海量黑白图纸进行高效存档。由于工程图纸中包含大面积连续的白色背景与少数黑色线条，系统采用了一维行程长度编码（RLE，Run-Length Encoding）并结合修正 Huffman 编码（MH 码）进行数据压缩。",
+    "questionText": "【问题 1】（6 分）\n(1) 行程长度编码（RLE）是一种基于统计特性的无损压缩算法，其基本思想是用一个 ______ 的数值与其连续重复出现的次数（长度）组成的二元组来代替连续相同的符号串。\n(2) 某行二值像素序列为：连续 12 个白像素、紧接着 4 个黑像素、再紧接着 20 个白像素。若规定默认从白色起始，则该序列的行程长度序列可记录为：(12, 4, ______)。\n\n【问题 2】（9 分）\n(3) 如果图像数据变化剧烈、相邻像素极少相同（例如高频噪点图像），采用 RLE 编码不仅不能压缩数据，反而可能由于附加了计数标志导致数据量 ______（膨胀/减小）。\n(4) G3/G4 传真标准中，采用将图像中黑白行程区分为短于 64 的终止码（Terminating Codes）和 64 整数倍的补偿码（Make-up Codes）的两级 Huffman 编码方案，该编码规范被称为 ______ 码（英文缩写为 MH 码）。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "像素",
+        "acceptableAnswers": [
+          "像素",
+          "符号",
+          "数值",
+          "基色"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "20",
+        "acceptableAnswers": [
+          "20"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "膨胀",
+        "acceptableAnswers": [
+          "膨胀",
+          "增大",
+          "增加",
+          "变大"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "修正霍夫曼",
+        "acceptableAnswers": [
+          "修正霍夫曼",
+          "修正哈夫曼",
+          "MH",
+          "Modified Huffman"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 像素（或符号 / 数值）\n(2) 20\n(3) 膨胀（或增大 / 增加）\n(4) 修正霍夫曼（Modified Huffman，MH 码）",
+    "analysis": "【考点解析】\n1. RLE 核心是 (Value, Run-Length) 替代冗长重复。\n2. 传真机由于每行像素极多且多为连续白像素，行程计数（12, 4, 20）极大地降低数据量。\n3. 最坏情况下，交替出现的黑白单像素序列经过 RLE 包装后体积翻倍，出现负压缩（数据膨胀）。\n4. CCITT T.4 规范定义的一维传真压缩是 MH 码（Modified Huffman），二维是 MR 码（Modified READ）。",
+    "totalScore": 15
+  },
+  {
+    "id": "2020-pm-03",
+    "year": 2020,
+    "questionNumber": 3,
+    "title": "试题三：三维计算机动画运动补间与正向/反向运动学",
+    "category": "计算机动画技术",
+    "background": "【说明】\n某数字互动多媒体展项中设计了一款机械臂抓取文物的交互式三维动画。动画师需要在虚拟场景中实现机械臂的 6 自由度转动，并使机械臂末端执行器能够精确对准由观众鼠标悬停所指示的目标物品空间三维坐标。",
+    "questionText": "【问题 1】（6 分）\n(1) 在计算机二维与三维动画中，动画师通常只需手动绘制关键瞬间的画面（即关键帧，Keyframe），两关键帧之间的连续过渡画面由计算机算法自动插值生成，这些过渡帧称为 ______ 帧。\n(2) 在控制关节型机器人旋转时，若从基座驱动关节角 $\\theta_1$、肩关节角 $\\theta_2$、肘关节角 $\\theta_3$ 一步步按运动矩阵推算出末端手爪的空间绝对坐标，这种运算方法称为 ______ 运动学（Forward Kinematics）。\n\n【问题 2】（9 分）\n(3) 展项要求手爪实时跟随观众鼠标目标点 $(x, y, z)$，因此系统必须根据末端目标位置反求出基座与各连杆的偏转角度，这种问题在数学上属于求解非线性方程组的 ______ 运动学（Inverse Kinematics）问题。\n(4) 动画回放时，人眼看到原本断续的画面产生连续运动的错觉，利用了人类视网膜神经系统的 ______ 效应（通常视觉保留时间约为 0.1~0.4 秒）。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "补间",
+        "acceptableAnswers": [
+          "补间",
+          "中间",
+          "过渡",
+          "补间帧"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "正向",
+        "acceptableAnswers": [
+          "正向",
+          "前向",
+          "FK"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "逆向",
+        "acceptableAnswers": [
+          "逆向",
+          "反向",
+          "IK",
+          "逆"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "视觉暂留",
+        "acceptableAnswers": [
+          "视觉暂留",
+          "视觉暂留效应",
+          "视觉停滞"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 补间（补间帧，Tweening）\n(2) 正向（前向，Forward Kinematics，FK）\n(3) 逆向（反向，Inverse Kinematics，IK）\n(4) 视觉暂留（视觉暂留效应，Persistence of Vision）",
+    "analysis": "【考点解析】\n1. 动画基本制作机制：关键帧（Keyframe）+ 补间帧（In-betweens/Tweens）。\n2. FK（已知各关节角求末端坐标，确定解）；IK（已知末端目标求各关节角，多解或无解，需数值迭代法求解）。\n3. 视觉暂留（Persistence of Vision）：人眼对光像在视网膜上停留约 100~400ms，是电影、电视、动画连贯播放的生理学基础。",
+    "totalScore": 15
+  },
+  {
+    "id": "2020-pm-04",
+    "year": 2020,
+    "questionNumber": 4,
+    "title": "试题四：虚拟现实 VR 系统沉浸感与头部姿态追踪",
+    "category": "虚拟现实与交互设备",
+    "background": "【说明】\n某虚拟现实（VR）驾考模拟训练舱采用头戴式显示器（HMD）结合六自由度（6-DoF）外部空间定位基站。为了避免学员在沉浸式体验中产生动晕症（Motion Sickness），系统架构师对头显的双目视差显示原理及“动捕到画面显示”（Motion-to-Photon）全链路延迟进行了指标把控。",
+    "questionText": "【问题 1】（6 分）\n(1) 虚拟现实系统具有三个基本特征，通常概括为 3I 特性，分别是指沉浸感（Immersion）、交互性（Interaction）和 ______ 性（Imagination）。\n(2) 人眼感知三维立体深度最关键的生理线索是左右两眼由于瞳距存在而在视网膜上成像产生的微小几何差异，称为双目 ______。\n\n【问题 2】（9 分）\n(3) 6-DoF 追踪技术不仅能追踪头显在空间中的 X、Y、Z 三轴平移位移，还能追踪围绕三轴旋转的偏航角、俯仰角和 ______ 角。\n(4) 为彻底消除由于头部转动与画面更新不同步造成的眩晕恶心感，业界公认 VR 系统的动捕到显示（Motion-to-Photon）全链路延迟必须控制在 ______ 毫秒（ms）以内。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "构想",
+        "acceptableAnswers": [
+          "构想",
+          "想象",
+          "Imagination"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "视差",
+        "acceptableAnswers": [
+          "视差",
+          "双目视差",
+          "Binocular Parallax"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "横滚",
+        "acceptableAnswers": [
+          "横滚",
+          "翻滚",
+          "Roll"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "20",
+        "acceptableAnswers": [
+          "20",
+          "20ms"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 构想（或想象，Imagination）\n(2) 视差（双目视差，Binocular Parallax）\n(3) 横滚（或翻滚，Roll）\n(4) 20（毫秒以内）",
+    "analysis": "【考点解析】\n1. VR 经典 3I 特征：沉浸感（Immersion）、交互性（Interaction）、构想性（Imagination）。\n2. 3D 立体视觉产生于双目视差（Binocular Parallax）。\n3. 3-DoF（旋转：Yaw、Pitch、Roll）；6-DoF（旋转 + 平移：X、Y、Z）。\n4. MTP（Motion-to-Photon）延迟是造成 VR 眩晕的关键原因，国际公认防晕阈值为 20ms 以内（90Hz/120Hz 刷新率与异步时间扭曲 ATW 技术结合）。",
+    "totalScore": 15
+  },
+  {
+    "id": "2020-pm-05",
+    "year": 2020,
+    "questionNumber": 5,
+    "title": "试题五：多媒体网络服务质量（QoS）与流量整形算法",
+    "category": "计算机网络与多媒体传输",
+    "background": "【说明】\n某智慧园区骨干网络承载视频会议、监控回传、网页浏览与文件下载等多种混合业务。由于早晚高峰期网络突发流量会导致视频会议画面冻结卡顿，网络工程师在出口路由器上配置了服务质量（QoS）策略，部署区分服务模型（DiffServ）与漏桶/令牌桶流量整形调度算法。",
+    "questionText": "【问题 1】（6 分）\n(1) 衡量多媒体网络传输服务质量（QoS）的四个核心技术指标包括：带宽（吞吐率）、传输延迟、丢包率以及数据包到达时间间隔的变化不均，后者称为网络 ______（Jitter）。\n(2) 在 IPv4 协议头部中，用于指示报文服务类型与 QoS 优先级分类的 8 位字段是 ______（Type of Service）字段。\n\n【问题 2】（9 分）\n(3) 流量整形技术常采用漏桶（Leaky Bucket）算法和令牌桶（Token Bucket）算法。其中，能够允许一定程度的突发流量（Burst）通过网络、突发最大数据量取决于当前桶中积累的令牌数量的算法是 ______ 桶算法。\n(4) 视频会议与语音通信属于实时交互型多媒体业务，对 ______（延迟/丢包）指标的要求最为严苛，通常要求单向端到端传输时间控制在 150ms 以内。",
+    "blanks": [
+      {
+        "id": "(1)",
+        "label": "空(1)",
+        "standardAnswer": "抖动",
+        "acceptableAnswers": [
+          "抖动",
+          "时延抖动",
+          "Jitter"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(2)",
+        "label": "空(2)",
+        "standardAnswer": "ToS",
+        "acceptableAnswers": [
+          "ToS",
+          "TOS",
+          "服务类型",
+          "DS"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(3)",
+        "label": "空(3)",
+        "standardAnswer": "令牌",
+        "acceptableAnswers": [
+          "令牌",
+          "Token",
+          "令牌桶"
+        ],
+        "score": 4
+      },
+      {
+        "id": "(4)",
+        "label": "空(4)",
+        "standardAnswer": "延迟",
+        "acceptableAnswers": [
+          "延迟",
+          "时延",
+          "时延指标",
+          "Delay"
+        ],
+        "score": 3
+      }
+    ],
+    "solution": "(1) 抖动（时延抖动，Jitter）\n(2) ToS（Type of Service，服务类型）\n(3) 令牌（Token Bucket，令牌桶算法）\n(4) 延迟（或时延）",
+    "analysis": "【考点解析】\n1. QoS 四大核心性能指标：带宽（Bandwidth）、时延（Delay）、抖动（Jitter）、丢包率（Packet Loss）。\n2. IPv4 头的 ToS 字段（DiffServ 中改名为 DS 字段），用于标记 DSCP 优先级。\n3. 漏桶（Leaky Bucket）：出水恒定，强行平滑突发；令牌桶（Token Bucket）：以恒定速率注水，允许消耗积累的令牌快速放行突发数据包。\n4. 交互式音视频 ITU-T G.114 推荐单向时延应小于 150ms，超过 400ms 则通话体验不可接受。",
+    "totalScore": 15
+  }
+]
